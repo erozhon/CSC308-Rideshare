@@ -1,20 +1,20 @@
 from rest_framework import serializers
 
-from api.models import Item
-from api.models import RideRequestPost
+from api.models import RideOffer
+from api.models import RideSeek
 from api.models import Search
 from api.models import Filter
 
-class ItemSerializer(serializers.ModelSerializer):
+class RideOfferSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Item
+        model = RideOffer
         fields = ('id', 'name_u', 'from_u', 'to_u', 'when_u', 'seats_u', 'cost_u', 'will_drop_u', 'extra_details_u')
         # fields = ('id', 'Name', 'From', 'To', 'When')
         # fields = ('id', 'Title', 'Description')
 
-class RideRequestPostSerializer(serializers.ModelSerializer):
+class RideSeekSerializer(serializers.ModelSerializer):
     class Meta:
-        model = RideRequestPost
+        model = RideSeek
         # fields = ('id', 'name_u', 'from_u', 'to_u', 'when_u', 'seats_u', 'cost_u', 'will_drop_u', 'extra_details_u')
         # fields = ('id', 'Name', 'From', 'To', 'When')
         # fields = ('id', 'Title', 'Description')

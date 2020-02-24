@@ -153,6 +153,7 @@ class Home extends Component{
                                 <p> {offer.when_u}</p>
                                 <p> {offer.cost_u}</p>
                                 <p> {offer.seats_u} spots left <Icon type="user"/>
+                                <p>{offer.name_u}</p>
                                 <Icon type="user"/>
                                 <Icon type="user"/>
                                 <Icon type="user"/></p>

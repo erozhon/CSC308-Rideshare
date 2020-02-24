@@ -149,11 +149,11 @@ class Home extends Component{
                             // </div>    
                             // )
                             <Card title="" extra={<Icon type="user"/>} style={{marginBottom: 20 + 'px'}}>
-                                <h1>{offer.name_u}</h1>
                                 <h1>{offer.from_u} to {offer.to_u}</h1>
                                 <p> {offer.when_u}</p>
                                 <p> {offer.cost_u}</p>
                                 <p> {offer.seats_u} spots left <Icon type="user"/>
+                                <p>{offer.name_u}</p>
                                 <Icon type="user"/>
                                 <Icon type="user"/>
                                 <Icon type="user"/></p>

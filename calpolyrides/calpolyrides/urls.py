@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.urls import path
 from rest_framework import routers
 
+import api.views
 from api.views import ItemViewSet
 from api.views import RideRequestPostViewSet
 from api.views import SearchViewSet

@@ -2,6 +2,7 @@ from django.db import models
 
 # Create your models here.
 
+
 class Item(models.Model):
     # title = models.CharField(max_length=100, default=0)
     # description = models.CharField(max_length=100, default=0)
@@ -14,6 +15,7 @@ class Item(models.Model):
     will_drop_u = models.BooleanField(verbose_name="Willing to drop along the way")
     extra_details_u = models.TextField(max_length=500, verbose_name="Extra Details")
 
+
 class RideRequestPost(models.Model):
     name_u = models.CharField(max_length=100, verbose_name="Name")
     from_u = models.CharField(max_length=100, verbose_name="From")
@@ -21,8 +23,10 @@ class RideRequestPost(models.Model):
     when_u = models.DateTimeField(verbose_name="When")
     extra_details_u = models.TextField(max_length=500, verbose_name="Extra Details")
 
+
 class Search(models.Model):
     search_u = models.CharField(max_length=100, verbose_name="Search")
+
 
 class Filter(models.Model):
     starting_bool_u = models.BooleanField(verbose_name="Filter for starting location")

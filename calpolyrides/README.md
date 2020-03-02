@@ -65,6 +65,11 @@ Install cors headers
 install django-cors-headers
 ```
 
+Install django-filter
+```
+pip3 install django-filter
+```
+
 ## Start Django Server
 
 1. Be in the outer calpolyrides folder

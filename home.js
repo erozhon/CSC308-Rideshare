@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import {Icon, Input} from 'antd';
 import "./Home.css";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
@@ -12,6 +12,7 @@ import FormControl from "react-bootstrap/FormControl";
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Image from "react-bootstrap/Image";
+import axios from 'axios';
 
 
 //create the links to the two different pages
@@ -168,78 +169,33 @@ function DriverForm() {
 
 //this is the main page information
 function MainPage() {
-  return (
-    <div>
-       
-      <Card border="success" style={{ width: "100rem" }}>
-        <Card.Header> Offered By : Mahima Choudhary</Card.Header>
-        <Card.Body>
-          <Card.Text>
-            <h5>From/To </h5>
-            LA -> SF
-            <br />
-            <br />
-            <h5>Date/Time </h5>
-            Friday 3/3 @ 4:00PM
-            <br />
-            <br />
-            <h5>Cost</h5>
-            $20
-            <br />
-            <br />
-            <h5>Spots Available</h5>
-            4 spots left 
-            <Icon type="user" />
-             <Icon type="user" /> <Icon type="user" /> <Icon type="user" />
-          </Card.Text>
-        </Card.Body>
-      </Card>
-      <br />
-      <Card border="success" style={{ width: "100rem" }}>
-        <Card.Header> Offered By : Kaitlin Clever</Card.Header>
-        <Card.Body>
-          <Card.Text>
-            <h5>From/To </h5>
-            Oregon -> Walnut Creek
-            <br />
-            <br />
-            <h5>Date/Time </h5>
-            Friday 3/3 @ 4:00PM
-            <br />
-            <br />
-            <h5>Cost</h5>
-            $25
-            <br />
-            <br />
-            <h5>Spots Available</h5>
-            1 spot left 
-            <Icon type="user" />
-          </Card.Text>
-        </Card.Body>
-      </Card>
-      <br />
-      <Card border="success" style={{ width: "100rem" }}>
-        <Card.Header> Offered By : Garrett Lew</Card.Header>
-        <Card.Body>
-          <h5>From/To </h5>
-          20 -> 21
-          <br />
-          <br />
-          <h5>Date/Time </h5>
-          Friday 3/3 @ 4:00PM
-          <br />
-          <br />
-          <h5>Cost</h5>
-          $20
-          <br />
-          <br />
-          <h5>Spots Available</h5>
-          3 spots left   <Icon type="user" /> <Icon type="user" />{" "}
-          <Icon type="user" />
-        </Card.Body>
-      </Card>
-         
-    </div>
-  );
-}
+    const [offer, setOffer] = useState({offerings: [] });
+    useEffect(() => {
+        const fetchData = async () => {
+            const result =  await axios('http://localhost:8000/api/ride_offer/?format=json');
+        console.log("result.data: ", result.data);
+        console.log("offer1: ", offer);
+        setOffer(result.data);
+        console.log("offer2: ", offer);
+        };
+    fetchData();
+    console.log("offer3: ", offer);
+    console.log("offerings: ", offer.offerings);
+    });
 
+    return (
+        <ul>
+            {offer.offerings.map(offer => (
+                <li>
+                    <Card title="" extra={<Icon type="user"/>} style = {{marginBottom: 20 + 'px'}}>
+                        <h1>key={offer.from_u} to key={offer.to_u}</h1>
+                        <p> {offer.when_u} </p>
+                        <p> {offer.cost_u} </p>
+                        <p> {offer.seats_u} spots left <Icon type="user"/></p>
+                        <Icon type="user"/>
+                    </Card>
+                </li>
+                ))}
+        </ul>
+    );
+}

@@ -169,26 +169,25 @@ function DriverForm() {
 
 //this is the main page information
 function MainPage() {
-    const [offer, setOffer] = useState({offerings: [] });
+    const [offer, setOffer] = useState([] );
     useEffect(() => {
         const fetchData = async () => {
-            const result =  await axios('http://localhost:8000/api/ride_offer/?format=json');
-        console.log("result.data: ", result.data);
-        console.log("offer1: ", offer);
-        setOffer(result.data);
-        console.log("offer2: ", offer);
+            const result = await axios.get('http://localhost:8000/api/ride_offer/?format=json',);
+            console.log("result.data: ", result.data);
+            setOffer(result.data);
+            console.log("offer1: ", offer);
+            console.log("offer2: ", offer);
         };
     fetchData();
     console.log("offer3: ", offer);
-    console.log("offerings: ", offer.offerings);
     });
 
     return (
         <ul>
-            {offer.offerings.map(offer => (
+            {offer.map(offer => (
                 <li>
                     <Card title="" extra={<Icon type="user"/>} style = {{marginBottom: 20 + 'px'}}>
-                        <h1>key={offer.from_u} to key={offer.to_u}</h1>
+                        <h1>{offer.from_u} to {offer.to_u}</h1>
                         <p> {offer.when_u} </p>
                         <p> {offer.cost_u} </p>
                         <p> {offer.seats_u} spots left <Icon type="user"/></p>

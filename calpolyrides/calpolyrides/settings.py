@@ -12,6 +12,27 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 
 import os
 
+# pyrebase stuff
+import pyrebase
+# config = {
+#   "apiKey": "AIzaSyA5UIi0D9omgIFU2qOyxFp5zGVCpVbuBlo",
+#   "authDomain": "calpolyrides.firebaseapp.com",
+#   "databaseURL": "https://calpolyrides.firebaseio.com",
+#   "storageBucket": "calpolyrides.appspot.com",
+#   "serviceAccount": "path/to/serviceAccountCredentials.json"
+# }
+config = {
+  "apiKey": "AIzaSyA5UIi0D9omgIFU2qOyxFp5zGVCpVbuBlo",
+  "authDomain": "calpolyrides.firebaseapp.com",
+  "databaseURL": "https://calpolyrides.firebaseio.com",
+  "projectId": "calpolyrides",
+  "storageBucket": "calpolyrides.appspot.com",
+  "messagingSenderId": "362270249379",
+  "appId": "1:362270249379:web:ff77b06783810b7fb04a16",
+  "measurementId": "G-DZN9PF354T"
+}
+firebase = pyrebase.initialize_app(config)
+db = firebase.database()
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -20,7 +41,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = ''
+SECRET_KEY = 'd4%d#kqqhz*pq8v56v=ip^co8bsls_6q_ty+n%n6%(+p*d0-h-'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True

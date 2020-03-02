@@ -13,6 +13,8 @@ import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Image from "react-bootstrap/Image";
 import axios from 'axios';
+import TimePicker from "antd/lib/time-picker";
+import DatePicker from "antd/lib/date-picker";
 
 
 //create the links to the two different pages
@@ -140,9 +142,6 @@ function DriverForm() {
   <Form.Group controlId="formBasicEmail">
     <Form.Label>Name</Form.Label>
     <Input placeholder="Name" className="sizing"></Input>
-   
-    <Form.Label>Cost</Form.Label>
-    <Input placeholder="Cost" className="sizing"></Input>
 
     <Form.Label>To</Form.Label>
     <Input placeholder="To" className="sizing"></Input>
@@ -150,7 +149,14 @@ function DriverForm() {
     <Form.Label>From</Form.Label>
     <Input placeholder="From" className="sizing"></Input>
 
-    <Form.Label>Seats Available</Form.Label>
+      <Form.Label>When</Form.Label>
+      <DatePicker placeholder = "Date" classname = "sizing"></DatePicker>
+      <TimePicker placeholder = "Time" classname="sizing"></TimePicker>
+
+      <Form.Label>Cost</Form.Label>
+    <Input placeholder="Cost" className="sizing"></Input>
+
+    <Form.Label>Seats Available</Form.Label>
     <Input placeholder="Seats Available" className="sizing"></Input>
 
   </Form.Group>

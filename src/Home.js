@@ -1,176 +1,206 @@
-import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
-import { Tabs, Icon, Button, Menu, Dropdown, Card, Input, Checkbox } from 'antd';
-import './Home.css';
+import React, {useState, useEffect} from "react";
+import {Icon, Input} from 'antd';
+import "./Home.css";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.min.css";
+import Card from "react-bootstrap/Card";
+import Navbar from "react-bootstrap/Navbar";
+import Nav from "react-bootstrap/Nav";
+import NavDropdown from "react-bootstrap/NavDropdown";
+import Form from "react-bootstrap/Form";
+import FormControl from "react-bootstrap/FormControl";
+import Button from "react-bootstrap/Button";
+import Col from "react-bootstrap/Col";
+import Image from "react-bootstrap/Image";
+import axios from 'axios';
+import TimePicker from "antd/lib/time-picker";
+import DatePicker from "antd/lib/date-picker";
 
-class Home extends Component{
-  constructor()
-  {
-      super();
-      this.state = {
-          'offerings': []
-      }
-  }
-  componentDidMount()
-  {
-      this.getOfferings();
-  }
 
-  getOfferings()
-  {
-      fetch('http://localhost:8000/api/ride_offer/')
-          .then(results => results.json())
-          .then(results => this.setState({'offerings': results}));
-  } 
-  render() {
-    const menu = (
-      <Menu>
-        <Menu.Item>
-          <a target="_blank" rel="noopener noreferrer" href="http://www.alipay.com/">
-            Profile
-          </a>
-        </Menu.Item>
-        <Menu.Item>
-          <a target="_blank" rel="noopener noreferrer" href="http://www.taobao.com/">
-            Settings
-          </a>
-        </Menu.Item>
-        <Menu.Item>
-          <a target="_blank" rel="noopener noreferrer" href="http://www.tmall.com/">
-            Help
-          </a>
-        </Menu.Item>
-        <Menu.Item>
-          <a target="_blank" rel="noopener noreferrer" href="http://www.tmall.com/">
-            Sign Out
-          </a>
-        </Menu.Item>
-      </Menu>
-    );
-    const profileButton = (<Dropdown overlay = {menu}>
-      <Button>
-        <Icon type = "user"/>
-      </Button>
-      </Dropdown>);
-    const { TabPane } = Tabs;
-    const { Search } = Input;
-    const { TextArea } = Input;
+//create the links to the two different pages
 
-    function onChange(e) {
-      console.log(`checked = ${e.target.checked}`);
-    }
-    
-    return (
-      <div className="header">
-        <p>CALPOLYRIDES</p>
-      <div className="padding">
-        <Tabs tabBarExtraContent={profileButton} defaultActiveKey="2" type="card">
-            <TabPane
-              tab={
-                <span>
-                  <Icon type="car" />
-                  Drivers
-                </span>
-              }
-              key="1"
-            >
-              <Input placeholder="Name" className="sizing"></Input>
-              <Input placeholder="Cost" className="sizing"></Input>
-              <Input placeholder="To" className="sizing"></Input>
-              <Input placeholder="From" className="sizing"></Input>
-              <br />
-              <Input placeholder="Seats Available" className="sizing"></Input>
-              <br />
-              <TextArea rows={4} placeholder="Extra Details" className="sizing"/>
-              <Checkbox onChange={onChange}>Drop off along the way</Checkbox>
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <Button className="but">
-                Create Post
-              </Button>
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
+export default function Home() {
+  return (
+    <Router>
+      <div>
+        <Col xs={6} md={4}>
+          <Image
+            src="https://lmulions.com/images/logos/Cal_Poly.png"
+            roundedCircle
+          />
+        </Col>
+        <Navbar bg="light" expand="lg">
+          <Navbar.Brand>
+            <p class="text-success">CALPOLYRIDES</p>
+          </Navbar.Brand>
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Collapse id="basic-navbar-nav">
+            <Nav className="mr-auto">
 
-            </TabPane>
-            <TabPane
-              tab={
-                <span>
-                  <Icon type="team"/>
-                  Riders
-                </span>
-              }
-              key="2"
-            >
-              <span>
-              <Search
-                placeholder="Search!"
-                onSearch={value => console.log(value)}
-                className="search"
+              <Nav.Link href="#link">
+                <li>
+                  <Link to="/main">
+                    <p class="text-success">Main Feed</p>
+                  </Link>
+                </li>
+              </Nav.Link>
+
+              <Nav.Link href="#home">
+                <li>
+                  <Link to="/profile">
+                    <p class="text-success">Profile</p>
+                  </Link>
+                </li>
+              </Nav.Link>
+
+              <Nav.Link href="#form">
+                <li>
+                  <Link to="/driverform">
+                    <p class="text-success">Driver Form</p>
+                  </Link>
+                </li>
+              </Nav.Link>
+
+              <NavDropdown title="Dropdown" id="basic-nav-dropdown">
+                <NavDropdown.Item href="#action/3.1"> </NavDropdown.Item>
+                <NavDropdown.Item href="#action/3.2">
+                  Another action
+                </NavDropdown.Item>
+                <NavDropdown.Item href="#action/3.3">
+                  Something
+                </NavDropdown.Item>
+                <NavDropdown.Divider />
+                <NavDropdown.Item href="#action/3.4">
+                  Separated link
+                </NavDropdown.Item>
+              </NavDropdown>
+            </Nav>
+            <Form inline>
+              <FormControl
+                type="text"
+                placeholder="Search"
+                className="mr-sm-2"
               />
-              <Button className="but">
-                Create Post
-              </Button>
-              <br />
-              <br />
-            <ul>
-                {this.state.offerings.map(function(offer, index)
-                    {
-                        return (
-                            // <div>
-                            //     <h1>{offer.from_u} -> {offer.to_u}</h1>
-                            //     <p>{offer.extra_details_u}</p>
-                            // </div>    
-                            // )
-                            <Card title="" extra={<Icon type="user"/>} style={{marginBottom: 20 + 'px'}}>
-                                <h1>{offer.from_u} to {offer.to_u}</h1>
-                                <p> {offer.when_u}</p>
-                                <p> {offer.cost_u}</p>
-                                <p> {offer.seats_u} spots left <Icon type="user"/>
-                                <p>{offer.name_u}</p>
-                                <Icon type="user"/>
-                                <Icon type="user"/>
-                                <Icon type="user"/></p>
-                            </Card>
-                        )}
+              <Button variant="outline-success">Search</Button>
+            </Form>
+          </Navbar.Collapse>
+        </Navbar>
 
-                    )}
-
-            </ul>
-              </span>
-            </TabPane>
-          </Tabs>
-         
+        <Switch>
+          <Route path="/profile">
+            <ProfilePage />
+          </Route>
+          <Route path="/main">
+            <MainPage />
+          </Route>
+          <Route path="/driverform">
+            <DriverForm />
+          </Route>
+        </Switch>
       </div>
-      </div>
-    );
-  }
+    </Router>
+  );
 }
 
-export default Home;
+//this is the profile page information
+function ProfilePage() {
+  return (
+    <div>
+      <Card border="success" style={{ width: "100rem" }}>
+        <Card.Header> Your Profile</Card.Header>
+        <Card.Body>
+          <Card.Title>Karson Slocum</Card.Title>
+          <Card.Text>
+            Year : Senior Major : Comp Sci Rating : 4.5/5
+            <br />
+            <br />
+            <h5>Car Information</h5>
+            Make/Model : Mazda 3 Seats : 4
+            <br />
+            <br />
+            <h5>Contact Information</h5>
+            Phone Number : 888-888-8888 Email : Kslocum@calpoly.edu
+          </Card.Text>
+        </Card.Body>
+      </Card>
+      <br />
+    </div>
+  );
+}
+
+//this is the driver form
+function DriverForm() {
+  return (
+    <div>
+
+    <h1 class = "text-success"> Driver Form</h1>
+    <Form.Text className="text-muted">
+      We'll never share your personal information with anyone else.
+    </Form.Text>
+
+  <Form>
+  <Form.Group controlId="formBasicEmail">
+    <Form.Label>Name</Form.Label>
+    <Input placeholder="Name" className="sizing"></Input>
+
+    <Form.Label>To</Form.Label>
+    <Input placeholder="To" className="sizing"></Input>
+
+    <Form.Label>From</Form.Label>
+    <Input placeholder="From" className="sizing"></Input>
+
+      <Form.Label>When</Form.Label>
+      <DatePicker placeholder = "Date" classname = "sizing"></DatePicker>
+      <TimePicker placeholder = "Time" classname="sizing"></TimePicker>
+
+      <Form.Label>Cost</Form.Label>
+    <Input placeholder="Cost" className="sizing"></Input>
+
+    <Form.Label>Seats Available</Form.Label>
+    <Input placeholder="Seats Available" className="sizing"></Input>
+
+  </Form.Group>
+
+
+  <Form.Group controlId="formBasicCheckbox">
+    <Form.Check type="checkbox" label="Willing to drop off on the way?" />
+  </Form.Group>
+  <Button variant="success" type="submit">
+    Submit
+  </Button>
+</Form>
+</div>
+  );
+}
+
+//this is the main page information
+function MainPage() {
+    const [offer, setOffer] = useState([] );
+    useEffect(() => {
+        const fetchData = async () => {
+            const result = await axios.get('http://localhost:8000/api/ride_offer/?format=json',);
+            console.log("result.data: ", result.data);
+            setOffer(result.data);
+            console.log("offer1: ", offer);
+            console.log("offer2: ", offer);
+        };
+    fetchData();
+    console.log("offer3: ", offer);
+    });
+
+    return (
+        <ul>
+            {offer.map(offer => (
+                <li>
+                    <Card title="" extra={<Icon type="user"/>} style = {{marginBottom: 20 + 'px'}}>
+                        <h1>{offer.from_u} to {offer.to_u}</h1>
+                        <p> {offer.when_u} </p>
+                        <p> {offer.cost_u} </p>
+                        <p> {offer.seats_u} spots left <Icon type="user"/></p>
+                        <Icon type="user"/>
+                    </Card>
+                </li>
+                ))}
+        </ul>
+    );
+}

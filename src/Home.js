@@ -13,8 +13,8 @@ import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Image from "react-bootstrap/Image";
 import axios from 'axios';
-import TimePicker from "antd/lib/time-picker";
-import DatePicker from "antd/lib/date-picker";
+//import TimePicker from "antd/lib/time-picker";
+//import DatePicker from "antd/lib/date-picker";
 
 
 //create the links to the two different pages
@@ -130,6 +130,38 @@ function ProfilePage() {
 
 //this is the driver form
 function DriverForm() {
+  const [name_u, setName] = useState('')
+  const [from_u, setFrom] = useState('')
+  const [to_u, setTo] = useState('')
+  const [when_u, setWhen] = useState('')
+  const [cost_u, setCost] = useState('')
+  const [seats_u, setSeats] = useState('')
+  const [will_drop_u, setWillDrop] = useState(false)
+  const [extra_details_u, setExtraDetails] = useState('')
+  const submit = e => {
+    e.preventDefault()
+      axios({
+        method: 'post',
+        url: 'http://localhost:8000/api/ride_offer/',
+        data: {
+          "name_u": name_u,
+          "from_u": from_u,
+          "to_u": to_u,
+          "when_u": when_u,
+          "seats_u": seats_u,
+          "cost_u": cost_u,
+          "will_drop_u": will_drop_u,
+          "extra_details_u": extra_details_u
+        }
+      })
+      .then((response) => {
+        console.log(response);
+      }, (error) => {
+        console.log(error);
+      });  
+  }
+
+
   return (
     <div>
 
@@ -138,39 +170,81 @@ function DriverForm() {
       We'll never share your personal information with anyone else.
     </Form.Text>
 
-  <Form>
-  <Form.Group controlId="formBasicEmail">
-    <Form.Label>Name</Form.Label>
-    <Input placeholder="Name" className="sizing"></Input>
+    <Form onSubmit={submit}>
+      <Form.Group controlId="formBasicEmail">
+        <Form.Label>Name</Form.Label>
+        <input 
+          type="text" 
+          placeholder="Name" 
+          className="sizing" 
+          value={name_u}
+          onChange={e => setName(e.target.value)}
+        />
 
-    <Form.Label>To</Form.Label>
-    <Input placeholder="To" className="sizing"></Input>
+        <Form.Label>To</Form.Label>
+        <Input 
+          type="text" 
+          placeholder="To" 
+          className="sizing" 
+          value={to_u}
+          onChange={e => setTo(e.target.value)}
+        />
 
-    <Form.Label>From</Form.Label>
-    <Input placeholder="From" className="sizing"></Input>
+        <Form.Label>From</Form.Label>
+        <Input 
+          type="text" 
+          placeholder="From" 
+          className="sizing" 
+          value={from_u}
+          onChange={e => setFrom(e.target.value)}/>
 
-      <Form.Label>When</Form.Label>
-      <DatePicker placeholder = "Date" classname = "sizing"></DatePicker>
-      <TimePicker placeholder = "Time" classname="sizing"></TimePicker>
+        <Form.Label>When</Form.Label>
+        <input 
+          type="datetime-local" 
+          placeholder="DateTime" 
+          className="sizing" 
+          value={when_u}
+          onChange={e => setWhen(e.target.value)}
+        />
 
-      <Form.Label>Cost</Form.Label>
-    <Input placeholder="Cost" className="sizing"></Input>
+        <Form.Label>Cost</Form.Label>
+        <Input 
+          placeholder="Cost" 
+          className="sizing" 
+          value={cost_u}
+          onChange={e => setCost(e.target.value)}
+        />
 
-    <Form.Label>Seats Available</Form.Label>
-    <Input placeholder="Seats Available" className="sizing"></Input>
+        <Form.Label>Seats Available</Form.Label>
+        <Input 
+          placeholder="Seats Available" 
+          className="sizing" 
+          value={seats_u}
+          onChange={e => setSeats(e.target.value)}
+        />
 
-  </Form.Group>
+        <textarea 
+          value={extra_details_u}
+          onChange={e => setExtraDetails(e.target.value)}
+        />
+
+      </Form.Group>
 
 
-  <Form.Group controlId="formBasicCheckbox">
-    <Form.Check type="checkbox" label="Willing to drop off on the way?" />
-  </Form.Group>
-  <Button variant="success" type="submit">
-    Submit
-  </Button>
-</Form>
-</div>
+      <Form.Group controlId="formBasicCheckbox">
+        <Form.Check 
+          type="checkbox" 
+          label="Willing to drop off on the way?" 
+          onChange={e => setWillDrop(e.target.value)}
+        />
+      </Form.Group>
+      <Button variant="success" type="submit">
+      Submit
+    </Button>
+    </Form>
+    </div>
   );
+  
 }
 
 //this is the main page information

@@ -138,6 +138,8 @@ function DriverForm() {
   const [seats_u, setSeats] = useState('')
   const [will_drop_u, setWillDrop] = useState(false)
   const [extra_details_u, setExtraDetails] = useState('')
+
+  const [isSent, setIsSent] = useState(false)
   const submit = e => {
     e.preventDefault()
       axios({
@@ -158,11 +160,27 @@ function DriverForm() {
         console.log(response);
       }, (error) => {
         console.log(error);
-      });  
+      }).then(() => setIsSent(true))  
   }
 
+  const successMessage = 
+                          <div>
+                            <p>Offer post completed successfully!</p>                   
+                            <Link to="/main">
+                              <p class="text-success">Return back to Main Feed</p>
+                            </Link>
+                            <Link to="/driverform" onClick={refreshPage}>
+                              <p class="text-success">Create another ride offering</p>
+                            </Link>                            
+                          </div>
 
   return (
+    isSent ?
+
+    successMessage
+
+    :
+
     <div>
 
     <h1 class = "text-success"> Driver Form</h1>
@@ -224,6 +242,7 @@ function DriverForm() {
         />
 
         <textarea 
+          placeholder="Extra Details"
           value={extra_details_u}
           onChange={e => setExtraDetails(e.target.value)}
         />
@@ -268,8 +287,9 @@ function MainPage() {
                 <li>
                     <Card title="" extra={<Icon type="user"/>} style = {{marginBottom: 20 + 'px'}}>
                         <h1>{offer.from_u} to {offer.to_u}</h1>
-                        <p> {offer.when_u} </p>
-                        <p> {offer.cost_u} </p>
+                        <h2>Driver: {offer.name_u}</h2>
+                        <p>Date time: {offer.when_u} </p>
+                        <p>$ {offer.cost_u} </p>
                         <p> {offer.seats_u} spots left <Icon type="user"/></p>
                         <Icon type="user"/>
                     </Card>
@@ -277,4 +297,8 @@ function MainPage() {
                 ))}
         </ul>
     );
+}
+
+function refreshPage() {
+    window.location.reload(false);
 }

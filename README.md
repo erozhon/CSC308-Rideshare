@@ -10,6 +10,16 @@ Then run yarn to finish installing it
 
 ### `yarn`
 
+Then install these packages:
+
+### `npm install axios`
+
+### `npm install react-bootstrap bootstrap`
+
+### `npm install react-router`
+
+### `npm install react-router-dom`
+
 ## Available Scripts
 
 In the project directory, you can run:

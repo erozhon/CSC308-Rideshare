@@ -1,176 +1,570 @@
-import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
-import { Tabs, Icon, Button, Menu, Dropdown, Card, Input, Checkbox } from 'antd';
-import './Home.css';
+import React, {useState, useEffect} from "react";
+import {Icon, Input} from 'antd';
+import "./Home.css";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.min.css";
+import Card from "react-bootstrap/Card";
+import Navbar from "react-bootstrap/Navbar";
+import Nav from "react-bootstrap/Nav";
+import NavDropdown from "react-bootstrap/NavDropdown";
+import Form from "react-bootstrap/Form";
+import FormControl from "react-bootstrap/FormControl";
+import Button from "react-bootstrap/Button";
+import Col from "react-bootstrap/Col";
+import Image from "react-bootstrap/Image";
+import axios from 'axios';
 
-class Home extends Component{
-  constructor()
-  {
-      super();
-      this.state = {
-          'offerings': []
-      }
-  }
-  componentDidMount()
-  {
-      this.getOfferings();
-  }
 
-  getOfferings()
-  {
-      fetch('http://localhost:8000/api/ride_offer/')
-          .then(results => results.json())
-          .then(results => this.setState({'offerings': results}));
-  } 
-  render() {
-    const menu = (
-      <Menu>
-        <Menu.Item>
-          <a target="_blank" rel="noopener noreferrer" href="http://www.alipay.com/">
-            Profile
-          </a>
-        </Menu.Item>
-        <Menu.Item>
-          <a target="_blank" rel="noopener noreferrer" href="http://www.taobao.com/">
-            Settings
-          </a>
-        </Menu.Item>
-        <Menu.Item>
-          <a target="_blank" rel="noopener noreferrer" href="http://www.tmall.com/">
-            Help
-          </a>
-        </Menu.Item>
-        <Menu.Item>
-          <a target="_blank" rel="noopener noreferrer" href="http://www.tmall.com/">
-            Sign Out
-          </a>
-        </Menu.Item>
-      </Menu>
-    );
-    const profileButton = (<Dropdown overlay = {menu}>
-      <Button>
-        <Icon type = "user"/>
-      </Button>
-      </Dropdown>);
-    const { TabPane } = Tabs;
-    const { Search } = Input;
-    const { TextArea } = Input;
+//create the links to the two different pages
 
-    function onChange(e) {
-      console.log(`checked = ${e.target.checked}`);
-    }
-    
-    return (
-      <div className="header">
-        <p>CALPOLYRIDES</p>
-      <div className="padding">
-        <Tabs tabBarExtraContent={profileButton} defaultActiveKey="2" type="card">
-            <TabPane
-              tab={
-                <span>
-                  <Icon type="car" />
-                  Drivers
-                </span>
-              }
-              key="1"
-            >
-              <Input placeholder="Name" className="sizing"></Input>
-              <Input placeholder="Cost" className="sizing"></Input>
-              <Input placeholder="To" className="sizing"></Input>
-              <Input placeholder="From" className="sizing"></Input>
-              <br />
-              <Input placeholder="Seats Available" className="sizing"></Input>
-              <br />
-              <TextArea rows={4} placeholder="Extra Details" className="sizing"/>
-              <Checkbox onChange={onChange}>Drop off along the way</Checkbox>
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <Button className="but">
-                Create Post
-              </Button>
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
+export default function Home() {
+  return (
+    <Router>
+      <div>
+        <Col xs={6} md={4}>
+          <Image
+            src="https://lmulions.com/images/logos/Cal_Poly.png"
+            roundedCircle
+          />
+        </Col>
+        <Navbar bg="light" expand="lg">
+          <Navbar.Brand>
+            <p class="text-success">CALPOLYRIDES</p>
+          </Navbar.Brand>
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Collapse id="basic-navbar-nav">
+            <Nav className="mr-auto">
 
-            </TabPane>
-            <TabPane
-              tab={
-                <span>
-                  <Icon type="team"/>
-                  Riders
-                </span>
-              }
-              key="2"
-            >
-              <span>
-              <Search
-                placeholder="Search!"
-                onSearch={value => console.log(value)}
-                className="search"
+              <Nav.Link href="#link">
+                <li>
+                  <Link to="/ride_offers">
+                    <p class="text-success">View Ride Offers</p>
+                  </Link>
+                </li>
+              </Nav.Link>
+
+              <Nav.Link href="#form">
+                <li>
+                  <Link to="/ride_offer_form">
+                    <p class="text-success">Create Ride Offer</p>
+                  </Link>
+                </li>
+              </Nav.Link> 
+              
+              <Nav.Link href="#link">
+                <li>
+                  <Link to="/ride_seeks">
+                    <p class="text-success">View Ride Requests</p>
+                  </Link>
+                </li>
+              </Nav.Link>   
+
+              <Nav.Link href="#form">
+                <li>
+                  <Link to="/ride_seek_form">
+                    <p class="text-success">Create Ride Request</p>
+                  </Link>
+                </li>
+              </Nav.Link>           
+
+              <Nav.Link href="#home">
+                <li>
+                  <Link to="/profile">
+                    <p class="text-success">Profile</p>
+                  </Link>
+                </li>
+              </Nav.Link>
+
+
+
+              <NavDropdown title="Dropdown" id="basic-nav-dropdown">
+                <NavDropdown.Item href="#action/3.1"> </NavDropdown.Item>
+                <NavDropdown.Item href="#action/3.2">
+                  Another action
+                </NavDropdown.Item>
+                <NavDropdown.Item href="#action/3.3">
+                  Something
+                </NavDropdown.Item>
+                <NavDropdown.Divider />
+                <NavDropdown.Item href="#action/3.4">
+                  Separated link
+                </NavDropdown.Item>
+              </NavDropdown>
+            </Nav>
+            <Form inline>
+              <FormControl
+                type="text"
+                placeholder="Search"
+                className="mr-sm-2"
               />
-              <Button className="but">
-                Create Post
-              </Button>
-              <br />
-              <br />
-            <ul>
-                {this.state.offerings.map(function(offer, index)
-                    {
-                        return (
-                            // <div>
-                            //     <h1>{offer.from_u} -> {offer.to_u}</h1>
-                            //     <p>{offer.extra_details_u}</p>
-                            // </div>    
-                            // )
-                            <Card title="" extra={<Icon type="user"/>} style={{marginBottom: 20 + 'px'}}>
-                                <h1>{offer.from_u} to {offer.to_u}</h1>
-                                <p> {offer.when_u}</p>
-                                <p> {offer.cost_u}</p>
-                                <p> {offer.seats_u} spots left <Icon type="user"/>
-                                <p>{offer.name_u}</p>
-                                <Icon type="user"/>
-                                <Icon type="user"/>
-                                <Icon type="user"/></p>
-                            </Card>
-                        )}
+              <Button variant="outline-success">Search</Button>
+            </Form>
+          </Navbar.Collapse>
+        </Navbar>
 
-                    )}
-
-            </ul>
-              </span>
-            </TabPane>
-          </Tabs>
-         
+        <Switch>
+          <Route path="/profile">
+            <ProfilePage />
+          </Route>
+          <Route path="/ride_offers">
+            <RideOfferPage />
+          </Route>
+          <Route path="/ride_offer_form">
+            <RideOfferForm />
+          </Route>
+          <Route path="/ride_seeks">
+            <RideSeekPage />
+          </Route>   
+          <Route path="/ride_seek_form">
+            <RideSeekForm />
+          </Route>             
+        </Switch>
       </div>
-      </div>
-    );
-  }
+    </Router>
+  );
 }
 
-export default Home;
+//this is the profile page information
+function ProfilePage() {
+  return (
+    <div>
+      <Card border="success" style={{ width: "100rem" }}>
+        <Card.Header> Your Profile</Card.Header>
+        <Card.Body>
+          <Card.Title>Karson Slocum</Card.Title>
+          <Card.Text>
+            Year : Senior Major : Comp Sci Rating : 4.5/5
+            <br />
+            <br />
+            <h5>Car Information</h5>
+            Make/Model : Mazda 3 Seats : 4
+            <br />
+            <br />
+            <h5>Contact Information</h5>
+            Phone Number : 888-888-8888 Email : Kslocum@calpoly.edu
+          </Card.Text>
+        </Card.Body>
+      </Card>
+      <br />
+    </div>
+  );
+}
+
+//this is the ride offer form
+function RideOfferForm() {
+  const [name_u, setName] = useState('')
+  const [from_u, setFrom] = useState('')
+  const [to_u, setTo] = useState('')
+  const [when_u, setWhen] = useState('')
+  const [cost_u, setCost] = useState('')
+  const [seats_u, setSeats] = useState('')
+  const [will_drop_u, setWillDrop] = useState(false)
+  const [extra_details_u, setExtraDetails] = useState('')
+
+  const [isSent, setIsSent] = useState(false)
+  const submit = e => {
+    e.preventDefault();
+    axios({
+      method: 'post',
+      url: 'http://localhost:8000/api/ride_offer/',
+      data: {
+        "name_u": name_u,
+        "from_u": from_u,
+        "to_u": to_u,
+        "when_u": when_u,
+        "seats_u": seats_u,
+        "cost_u": cost_u,
+        "will_drop_u": will_drop_u,
+        "extra_details_u": extra_details_u
+      }
+    })
+    .then((response) => {
+      console.log(response);
+    }, (error) => {
+      console.log(error);
+    }).then(() => setIsSent(true));
+  }
+
+  const successMessage = 
+                          <div>
+                            <p>Ride offer post completed successfully!</p>                   
+                            <Link to="/ride_offers">
+                              <p class="text-success">View ride offers</p>
+                            </Link>
+                            <Link to="/ride_offer_form" onClick={refreshPage}>
+                              <p class="text-success">Create another ride offer</p>
+                            </Link>                            
+                          </div>
+  // check for successful submit
+  return (
+    isSent ?
+
+    successMessage
+
+    :
+
+    <div>
+
+    <h1 class = "text-success"> Create Ride Request</h1>
+    <Form.Text className="text-muted">
+      We'll never share your personal information with anyone else.
+    </Form.Text>
+
+    <Form onSubmit={submit}>
+      <Form.Group controlId="formBasicEmail">
+        <Form.Label>Name</Form.Label>
+        <input 
+          type="text" 
+          placeholder="Name" 
+          className="sizing" 
+          value={name_u}
+          onChange={e => setName(e.target.value)}
+        />
+
+        <Form.Label>To</Form.Label>
+        <Input 
+          type="text" 
+          placeholder="To" 
+          className="sizing" 
+          value={to_u}
+          onChange={e => setTo(e.target.value)}
+        />
+
+        <Form.Label>From</Form.Label>
+        <Input 
+          type="text" 
+          placeholder="From" 
+          className="sizing" 
+          value={from_u}
+          onChange={e => setFrom(e.target.value)}/>
+
+        <Form.Label>When</Form.Label>
+        <input 
+          type="datetime-local" 
+          placeholder="DateTime" 
+          className="sizing" 
+          value={when_u}
+          onChange={e => setWhen(e.target.value)}
+        />
+
+        <Form.Label>Cost</Form.Label>
+        <Input 
+          placeholder="Cost" 
+          className="sizing" 
+          value={cost_u}
+          onChange={e => setCost(e.target.value)}
+        />
+
+        <Form.Label>Seats Available</Form.Label>
+        <Input 
+          placeholder="Seats Available" 
+          className="sizing" 
+          value={seats_u}
+          onChange={e => setSeats(e.target.value)}
+        />
+
+        <textarea 
+          placeholder="Extra Details"
+          value={extra_details_u}
+          onChange={e => setExtraDetails(e.target.value)}
+        />
+
+      </Form.Group>
+
+      <Form.Group controlId="formBasicCheckbox">
+        <Form.Check 
+          type="checkbox" 
+          label="Willing to drop off on the way?" 
+          onChange={e => setWillDrop(e.target.value)}
+        />
+      </Form.Group>
+      <Button variant="success" type="submit">
+      Submit
+    </Button>
+    </Form>
+    </div>
+  );
+  
+}
+
+//this is the ride offer page information
+function RideOfferPage() {
+    const [offer, setOffer] = useState([]);
+    const [from_u, setFrom] = useState('')
+    const [to_u, setTo] = useState('')
+    const [when_u_lte, setWhenLTE] = useState('')
+    const [when_u_gte, setWhenGTE] = useState('')
+    const [cost_u, setCost] = useState('')
+    const [link, setLink] = useState("http://localhost:8000/api/ride_offer/?format=json")
+    useEffect(() => {
+        const fetchData = async () => {
+            const result = await axios.get(link);
+            setOffer(result.data);
+        };
+    fetchData();
+
+    });
+
+    const submit = e => {
+      e.preventDefault()
+      setLink("http://localhost:8000/api/ride_offer/?from_u__icontains="+from_u+"&to_u__icontains="+to_u+"&when_u__lte="+when_u_lte+"&when_u__gte="+when_u_gte+"&cost_u__lte="+cost_u+"&format=json")      
+    }
+
+    return (
+        <div>
+          <div>
+          <h1> Filter by </h1>
+            <Form inline onSubmit={submit}>
+              <FormControl
+                type="text"
+                placeholder="From"
+                className="mr-sm-2"
+                value={from_u}
+                onChange={e => setFrom(e.target.value)}
+              />
+              <FormControl
+                type="text"
+                placeholder="To"
+                className="mr-sm-2"
+                value={to_u}
+                onChange={e => setTo(e.target.value)}
+              />
+              <p> Rides before this time</p>
+              <FormControl
+                type="datetime-local"
+                placeholder="Rides before this time"
+                className="mr-sm-2"
+                value={when_u_lte}
+                onChange={e => setWhenLTE(e.target.value)}
+              />
+              <p> Rides after this time</p>
+              <FormControl
+                type="datetime-local"
+                placeholder="Rides after this time"
+                className="mr-sm-2"
+                value={when_u_gte}
+                onChange={e => setWhenGTE(e.target.value)}
+              />
+              <FormControl
+                type="text"
+                placeholder="Cost is less than equal to"
+                className="mr-sm-2"
+                value={cost_u}
+                onChange={e => setCost(e.target.value)}
+              />
+              <Button variant="outline-success" type="submit">
+                Filter
+              </Button>
+            </Form>
+          </div>
+          <div>
+            <h1> Ride Offers </h1>
+            <ul>
+                {offer.map(offer => (
+                    <li>
+                        <Card title="" extra={<Icon type="user"/>} style = {{marginBottom: 20 + 'px'}}>
+                            <h2> {offer.name_u} offering {offer.from_u} to {offer.to_u}</h2>
+                            <p> When: {offer.when_u} </p>
+                            <p> Cost: ${offer.cost_u} </p>  
+                            <p> Seats: {offer.seats_u} <Icon type="user"/></p>                      
+                            <p> Details: </p>                        
+                            <p> {offer.will_drop_u ? "willing to drop off" : "not willing to drop off"} </p>
+                            <p> {offer.extra_details_u}</p>
+                        </Card>
+                    </li>
+                    ))}
+            </ul>
+          </div>
+        </div>
+    );
+}
+
+// page for ride requests
+function RideSeekPage() {
+    const [seek, setSeek] = useState([] );
+    const [from_u, setFrom] = useState('')
+    const [to_u, setTo] = useState('')
+    const [when_u_lte, setWhenLTE] = useState('')
+    const [when_u_gte, setWhenGTE] = useState('')
+    const [link, setLink] = useState("http://localhost:8000/api/ride_offer/?format=json")
+    useEffect(() => {
+        const fetchData = async () => {
+            const result = await axios.get(link);
+            setSeek(result.data);
+        };
+    fetchData();
+    });
+
+    const submit = e => {
+      e.preventDefault()
+      setLink("http://localhost:8000/api/ride_offer/?from_u__icontains="+from_u+"&to_u__icontains="+to_u+"&when_u__lte="+when_u_lte+"&when_u__gte="+when_u_gte+"&format=json")      
+    }
+
+    return (
+      <div>
+        <div>
+          <h1> Filter by </h1>
+          <Form inline onSubmit={submit}>
+            <FormControl
+              type="text"
+              placeholder="From"
+              className="mr-sm-2"
+              value={from_u}
+              onChange={e => setFrom(e.target.value)}
+            />
+            <FormControl
+              type="text"
+              placeholder="To"
+              className="mr-sm-2"
+              value={to_u}
+              onChange={e => setTo(e.target.value)}
+            />
+            <p> Rides before this time</p>
+            <FormControl
+              type="datetime-local"
+              placeholder="Rides before this time"
+              className="mr-sm-2"
+              value={when_u_lte}
+              onChange={e => setWhenLTE(e.target.value)}
+            />
+            <p> Rides after this time</p>
+            <FormControl
+              type="datetime-local"
+              placeholder="Rides after this time"
+              className="mr-sm-2"
+              value={when_u_gte}
+              onChange={e => setWhenGTE(e.target.value)}
+            />
+            <Button variant="outline-success" type="submit">
+              Filter
+            </Button>
+          </Form>
+        </div>
+        <div>
+          <h1> Ride Requests </h1>
+          <ul>
+              {seek.map(seek => (
+                  <li>
+                      <Card title="" extra={<Icon type="user"/>} style = {{marginBottom: 20 + 'px'}}>
+                          <h2>{seek.name_u} seeking {seek.from_u} to {seek.to_u}</h2>
+                          <p>When: {seek.when_u} </p>
+                          <p>Details: {seek.extra_details_u} </p>
+                      </Card>
+                  </li>
+                  ))}
+          </ul>
+        </div>
+      </div>  
+    );
+}
+
+// page for Ride Request form
+function RideSeekForm() {
+  const [name_u, setName] = useState('')
+  const [from_u, setFrom] = useState('')
+  const [to_u, setTo] = useState('')
+  const [when_u, setWhen] = useState('')
+  const [extra_details_u, setExtraDetails] = useState('')
+
+  const [isSent, setIsSent] = useState(false)
+  const submit = e => {
+    e.preventDefault()
+      axios({
+        method: 'post',
+        url: 'http://localhost:8000/api/ride_seek/',
+        data: {
+          "name_u": name_u,
+          "from_u": from_u,
+          "to_u": to_u,
+          "when_u": when_u,
+          "extra_details_u": extra_details_u
+        }
+      })
+      .then((response) => {
+        console.log(response);
+      }, (error) => {
+        console.log(error);
+      }).then(() => setIsSent(true))  
+  }
+
+  const successMessage = 
+                          <div>
+                            <p>Ride request post completed successfully!</p>                   
+                            <Link to="/ride_seeks">
+                              <p class="text-success">View ride requests</p>
+                            </Link>
+                            <Link to="/ride_seek_form" onClick={refreshPage}>
+                              <p class="text-success">Create another ride request</p>
+                            </Link>                            
+                          </div>
+  // check for successful submit
+  return (
+    isSent ?
+
+    successMessage
+
+    :
+
+    <div>
+
+    <h1 class = "text-success"> Create Ride Offer</h1>
+    <Form.Text className="text-muted">
+      We'll never share your personal information with anyone else.
+    </Form.Text>
+
+    <Form onSubmit={submit}>
+      <Form.Group controlId="formBasicEmail">
+        <Form.Label>Name</Form.Label>
+        <input 
+          type="text" 
+          placeholder="Name" 
+          className="sizing" 
+          value={name_u}
+          onChange={e => setName(e.target.value)}
+        />
+
+        <Form.Label>To</Form.Label>
+        <Input 
+          type="text" 
+          placeholder="To" 
+          className="sizing" 
+          value={to_u}
+          onChange={e => setTo(e.target.value)}
+        />
+
+        <Form.Label>From</Form.Label>
+        <Input 
+          type="text" 
+          placeholder="From" 
+          className="sizing" 
+          value={from_u}
+          onChange={e => setFrom(e.target.value)}/>
+
+        <Form.Label>When</Form.Label>
+        <input 
+          type="datetime-local" 
+          placeholder="DateTime" 
+          className="sizing" 
+          value={when_u}
+          onChange={e => setWhen(e.target.value)}
+        />
+
+        <textarea 
+          placeholder="Extra Details"
+          value={extra_details_u}
+          onChange={e => setExtraDetails(e.target.value)}
+        />
+
+      </Form.Group>
+      <Button variant="success" type="submit">
+      Submit
+    </Button>
+    </Form>
+    </div>
+  );
+  
+}
+
+function refreshPage() {
+    window.location.reload(false);
+}

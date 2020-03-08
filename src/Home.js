@@ -43,6 +43,30 @@ export default function Home() {
                 </li>
               </Nav.Link>
 
+              <Nav.Link href="#form">
+                <li>
+                  <Link to="/ride_offer_form">
+                    <p class="text-success">Create Ride Offer</p>
+                  </Link>
+                </li>
+              </Nav.Link> 
+              
+              <Nav.Link href="#link">
+                <li>
+                  <Link to="/ride_seeks">
+                    <p class="text-success">View Ride Requests</p>
+                  </Link>
+                </li>
+              </Nav.Link>   
+
+              <Nav.Link href="#form">
+                <li>
+                  <Link to="/ride_seek_form">
+                    <p class="text-success">Create Ride Request</p>
+                  </Link>
+                </li>
+              </Nav.Link>           
+
               <Nav.Link href="#home">
                 <li>
                   <Link to="/profile">
@@ -51,13 +75,7 @@ export default function Home() {
                 </li>
               </Nav.Link>
 
-              <Nav.Link href="#form">
-                <li>
-                  <Link to="/ride_offer_form">
-                    <p class="text-success">Create Ride Offer</p>
-                  </Link>
-                </li>
-              </Nav.Link>
+
 
               <NavDropdown title="Dropdown" id="basic-nav-dropdown">
                 <NavDropdown.Item href="#action/3.1"> </NavDropdown.Item>
@@ -94,6 +112,12 @@ export default function Home() {
           <Route path="/ride_offer_form">
             <RideOfferForm />
           </Route>
+          <Route path="/ride_seeks">
+            <RideSeekPage />
+          </Route>   
+          <Route path="/ride_seek_form">
+            <RideSeekForm />
+          </Route>             
         </Switch>
       </div>
     </Router>
@@ -163,7 +187,7 @@ function RideOfferForm() {
 
   const successMessage = 
                           <div>
-                            <p>Offer post completed successfully!</p>                   
+                            <p>Ride offer post completed successfully!</p>                   
                             <Link to="/ride_offers">
                               <p class="text-success">View ride offers</p>
                             </Link>
@@ -283,17 +307,149 @@ function RideOfferPage() {
             {offer.map(offer => (
                 <li>
                     <Card title="" extra={<Icon type="user"/>} style = {{marginBottom: 20 + 'px'}}>
-                        <h1>{offer.from_u} to {offer.to_u}</h1>
-                        <h2>Driver: {offer.name_u}</h2>
-                        <p>Date time: {offer.when_u} </p>
-                        <p>$ {offer.cost_u} </p>
-                        <p> {offer.seats_u} spots left <Icon type="user"/></p>
-                        <Icon type="user"/>
+                        <h2> {offer.name_u} offering {offer.from_u} to {offer.to_u}</h2>
+                        <p> When: {offer.when_u} </p>
+                        <p> Cost: ${offer.cost_u} </p>  
+                        <p> Seats: {offer.seats_u} <Icon type="user"/></p>                      
+                        <p> Details: </p>                        
+                        <p> {offer.will_drop_u ? "willing to drop off" : "not willing to drop off"} </p>
+                        <p> {offer.extra_details_u}</p>
                     </Card>
                 </li>
                 ))}
         </ul>
     );
+}
+
+function RideSeekPage() {
+    const [seek, setSeek] = useState([] );
+    useEffect(() => {
+        const fetchData = async () => {
+            const result = await axios.get('http://localhost:8000/api/ride_seek/?format=json',);
+            setSeek(result.data);
+        };
+    fetchData();
+    });
+
+    return (
+        <ul>
+            {seek.map(seek => (
+                <li>
+                    <Card title="" extra={<Icon type="user"/>} style = {{marginBottom: 20 + 'px'}}>
+                        <h2>{seek.name_u} seeking {seek.from_u} to {seek.to_u}</h2>
+                        <p>When: {seek.when_u} </p>
+                        <p>Details: {seek.extra_details_u} </p>
+                    </Card>
+                </li>
+                ))}
+        </ul>
+    );
+}
+
+function RideSeekForm() {
+  const [name_u, setName] = useState('')
+  const [from_u, setFrom] = useState('')
+  const [to_u, setTo] = useState('')
+  const [when_u, setWhen] = useState('')
+  const [extra_details_u, setExtraDetails] = useState('')
+
+  const [isSent, setIsSent] = useState(false)
+  const submit = e => {
+    e.preventDefault()
+      axios({
+        method: 'post',
+        url: 'http://localhost:8000/api/ride_seek/',
+        data: {
+          "name_u": name_u,
+          "from_u": from_u,
+          "to_u": to_u,
+          "when_u": when_u,
+          "extra_details_u": extra_details_u
+        }
+      })
+      .then((response) => {
+        console.log(response);
+      }, (error) => {
+        console.log(error);
+      }).then(() => setIsSent(true))  
+  }
+
+  const successMessage = 
+                          <div>
+                            <p>Ride request post completed successfully!</p>                   
+                            <Link to="/ride_seeks">
+                              <p class="text-success">View ride requests</p>
+                            </Link>
+                            <Link to="/ride_seek_form" onClick={refreshPage}>
+                              <p class="text-success">Create another ride request</p>
+                            </Link>                            
+                          </div>
+
+  return (
+    isSent ?
+
+    successMessage
+
+    :
+
+    <div>
+
+    <h1 class = "text-success"> Driver Form</h1>
+    <Form.Text className="text-muted">
+      We'll never share your personal information with anyone else.
+    </Form.Text>
+
+    <Form onSubmit={submit}>
+      <Form.Group controlId="formBasicEmail">
+        <Form.Label>Name</Form.Label>
+        <input 
+          type="text" 
+          placeholder="Name" 
+          className="sizing" 
+          value={name_u}
+          onChange={e => setName(e.target.value)}
+        />
+
+        <Form.Label>To</Form.Label>
+        <Input 
+          type="text" 
+          placeholder="To" 
+          className="sizing" 
+          value={to_u}
+          onChange={e => setTo(e.target.value)}
+        />
+
+        <Form.Label>From</Form.Label>
+        <Input 
+          type="text" 
+          placeholder="From" 
+          className="sizing" 
+          value={from_u}
+          onChange={e => setFrom(e.target.value)}/>
+
+        <Form.Label>When</Form.Label>
+        <input 
+          type="datetime-local" 
+          placeholder="DateTime" 
+          className="sizing" 
+          value={when_u}
+          onChange={e => setWhen(e.target.value)}
+        />
+
+        <textarea 
+          placeholder="Extra Details"
+          value={extra_details_u}
+          onChange={e => setExtraDetails(e.target.value)}
+        />
+
+      </Form.Group>
+      <Button variant="success" type="submit">
+      Submit
+    </Button>
+    </Form>
+    </div>
+  );
+  
 }
 
 function refreshPage() {

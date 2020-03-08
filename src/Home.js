@@ -150,7 +150,7 @@ function ProfilePage() {
   );
 }
 
-//this is the driver form
+//this is the ride offer form
 function RideOfferForm() {
   const [name_u, setName] = useState('')
   const [from_u, setFrom] = useState('')
@@ -163,26 +163,26 @@ function RideOfferForm() {
 
   const [isSent, setIsSent] = useState(false)
   const submit = e => {
-    e.preventDefault()
-      axios({
-        method: 'post',
-        url: 'http://localhost:8000/api/ride_offer/',
-        data: {
-          "name_u": name_u,
-          "from_u": from_u,
-          "to_u": to_u,
-          "when_u": when_u,
-          "seats_u": seats_u,
-          "cost_u": cost_u,
-          "will_drop_u": will_drop_u,
-          "extra_details_u": extra_details_u
-        }
-      })
-      .then((response) => {
-        console.log(response);
-      }, (error) => {
-        console.log(error);
-      }).then(() => setIsSent(true))  
+    e.preventDefault();
+    axios({
+      method: 'post',
+      url: 'http://localhost:8000/api/ride_offer/',
+      data: {
+        "name_u": name_u,
+        "from_u": from_u,
+        "to_u": to_u,
+        "when_u": when_u,
+        "seats_u": seats_u,
+        "cost_u": cost_u,
+        "will_drop_u": will_drop_u,
+        "extra_details_u": extra_details_u
+      }
+    })
+    .then((response) => {
+      console.log(response);
+    }, (error) => {
+      console.log(error);
+    }).then(() => setIsSent(true));
   }
 
   const successMessage = 
@@ -205,7 +205,7 @@ function RideOfferForm() {
 
     <div>
 
-    <h1 class = "text-success"> Driver Form</h1>
+    <h1 class = "text-success"> Create Ride Request</h1>
     <Form.Text className="text-muted">
       We'll never share your personal information with anyone else.
     </Form.Text>
@@ -289,60 +289,174 @@ function RideOfferForm() {
 
 //this is the ride offer page information
 function RideOfferPage() {
-    const [offer, setOffer] = useState([] );
+    const [offer, setOffer] = useState([]);
+    const [from_u, setFrom] = useState('')
+    const [to_u, setTo] = useState('')
+    const [when_u_lte, setWhenLTE] = useState('')
+    const [when_u_gte, setWhenGTE] = useState('')
+    const [cost_u, setCost] = useState('')
+    const [link, setLink] = useState("http://localhost:8000/api/ride_offer/?format=json")
     useEffect(() => {
         const fetchData = async () => {
-            const result = await axios.get('http://localhost:8000/api/ride_offer/?format=json',);
+            const result = await axios.get(link);
             console.log("result.data: ", result.data);
             setOffer(result.data);
-            console.log("offer1: ", offer);
-            console.log("offer2: ", offer);
         };
     fetchData();
-    console.log("offer3: ", offer);
+
     });
 
+    const submit = e => {
+      e.preventDefault()
+      setLink("http://localhost:8000/api/ride_offer/?from_u__icontains="+from_u+"&to_u__icontains="+to_u+"&when_u__lte="+when_u_lte+"&when_u__gte="+when_u_gte+"&cost_u__lte="+cost_u+"&format=json")      
+    }
+
     return (
-        <ul>
-            {offer.map(offer => (
-                <li>
-                    <Card title="" extra={<Icon type="user"/>} style = {{marginBottom: 20 + 'px'}}>
-                        <h2> {offer.name_u} offering {offer.from_u} to {offer.to_u}</h2>
-                        <p> When: {offer.when_u} </p>
-                        <p> Cost: ${offer.cost_u} </p>  
-                        <p> Seats: {offer.seats_u} <Icon type="user"/></p>                      
-                        <p> Details: </p>                        
-                        <p> {offer.will_drop_u ? "willing to drop off" : "not willing to drop off"} </p>
-                        <p> {offer.extra_details_u}</p>
-                    </Card>
-                </li>
-                ))}
-        </ul>
+        <div>
+          <div>
+          <h1> Filter by </h1>
+            <Form inline onSubmit={submit}>
+              <FormControl
+                type="text"
+                placeholder="From"
+                className="mr-sm-2"
+                value={from_u}
+                onChange={e => setFrom(e.target.value)}
+              />
+              <FormControl
+                type="text"
+                placeholder="To"
+                className="mr-sm-2"
+                value={to_u}
+                onChange={e => setTo(e.target.value)}
+              />
+              <p> Rides before this time</p>
+              <FormControl
+                type="datetime-local"
+                placeholder="Rides before this time"
+                className="mr-sm-2"
+                value={when_u_lte}
+                onChange={e => setWhenLTE(e.target.value)}
+              />
+              <p> Rides after this time</p>
+              <FormControl
+                type="datetime-local"
+                placeholder="Rides after this time"
+                className="mr-sm-2"
+                value={when_u_gte}
+                onChange={e => setWhenGTE(e.target.value)}
+              />
+              <FormControl
+                type="text"
+                placeholder="Cost is less than equal to"
+                className="mr-sm-2"
+                value={cost_u}
+                onChange={e => setCost(e.target.value)}
+              />
+              <Button variant="outline-success" type="submit">
+                Filter
+              </Button>
+            </Form>
+          </div>
+          <div>
+            <h1> Ride Offers </h1>
+            <ul>
+                {offer.map(offer => (
+                    <li>
+                        <Card title="" extra={<Icon type="user"/>} style = {{marginBottom: 20 + 'px'}}>
+                            <h2> {offer.name_u} offering {offer.from_u} to {offer.to_u}</h2>
+                            <p> When: {offer.when_u} </p>
+                            <p> Cost: ${offer.cost_u} </p>  
+                            <p> Seats: {offer.seats_u} <Icon type="user"/></p>                      
+                            <p> Details: </p>                        
+                            <p> {offer.will_drop_u ? "willing to drop off" : "not willing to drop off"} </p>
+                            <p> {offer.extra_details_u}</p>
+                        </Card>
+                    </li>
+                    ))}
+            </ul>
+          </div>
+        </div>
     );
 }
 
 function RideSeekPage() {
     const [seek, setSeek] = useState([] );
+    const [offer, setOffer] = useState([]);
+    const [from_u, setFrom] = useState('')
+    const [to_u, setTo] = useState('')
+    const [when_u_lte, setWhenLTE] = useState('')
+    const [when_u_gte, setWhenGTE] = useState('')
+    const [cost_u, setCost] = useState('')
+    const [link, setLink] = useState("http://localhost:8000/api/ride_offer/?format=json")
     useEffect(() => {
         const fetchData = async () => {
-            const result = await axios.get('http://localhost:8000/api/ride_seek/?format=json',);
+            const result = await axios.get(link);
             setSeek(result.data);
         };
     fetchData();
     });
 
+    const submit = e => {
+      e.preventDefault()
+      setLink("http://localhost:8000/api/ride_offer/?from_u__icontains="+from_u+"&to_u__icontains="+to_u+"&when_u__lte="+when_u_lte+"&when_u__gte="+when_u_gte+"&format=json")      
+    }
+
     return (
-        <ul>
-            {seek.map(seek => (
-                <li>
-                    <Card title="" extra={<Icon type="user"/>} style = {{marginBottom: 20 + 'px'}}>
-                        <h2>{seek.name_u} seeking {seek.from_u} to {seek.to_u}</h2>
-                        <p>When: {seek.when_u} </p>
-                        <p>Details: {seek.extra_details_u} </p>
-                    </Card>
-                </li>
-                ))}
-        </ul>
+      <div>
+        <div>
+          <h1> Filter by </h1>
+          <Form inline onSubmit={submit}>
+            <FormControl
+              type="text"
+              placeholder="From"
+              className="mr-sm-2"
+              value={from_u}
+              onChange={e => setFrom(e.target.value)}
+            />
+            <FormControl
+              type="text"
+              placeholder="To"
+              className="mr-sm-2"
+              value={to_u}
+              onChange={e => setTo(e.target.value)}
+            />
+            <p> Rides before this time</p>
+            <FormControl
+              type="datetime-local"
+              placeholder="Rides before this time"
+              className="mr-sm-2"
+              value={when_u_lte}
+              onChange={e => setWhenLTE(e.target.value)}
+            />
+            <p> Rides after this time</p>
+            <FormControl
+              type="datetime-local"
+              placeholder="Rides after this time"
+              className="mr-sm-2"
+              value={when_u_gte}
+              onChange={e => setWhenGTE(e.target.value)}
+            />
+            <Button variant="outline-success" type="submit">
+              Filter
+            </Button>
+          </Form>
+        </div>
+        <div>
+          <h1> Ride Requests </h1>
+          <ul>
+              {seek.map(seek => (
+                  <li>
+                      <Card title="" extra={<Icon type="user"/>} style = {{marginBottom: 20 + 'px'}}>
+                          <h2>{seek.name_u} seeking {seek.from_u} to {seek.to_u}</h2>
+                          <p>When: {seek.when_u} </p>
+                          <p>Details: {seek.extra_details_u} </p>
+                      </Card>
+                  </li>
+                  ))}
+          </ul>
+        </div>
+      </div>  
     );
 }
 
@@ -394,7 +508,7 @@ function RideSeekForm() {
 
     <div>
 
-    <h1 class = "text-success"> Driver Form</h1>
+    <h1 class = "text-success"> Create Ride Offer</h1>
     <Form.Text className="text-muted">
       We'll never share your personal information with anyone else.
     </Form.Text>

@@ -195,7 +195,7 @@ function RideOfferForm() {
                               <p class="text-success">Create another ride offer</p>
                             </Link>                            
                           </div>
-
+  // check for successful submit
   return (
     isSent ?
 
@@ -299,7 +299,6 @@ function RideOfferPage() {
     useEffect(() => {
         const fetchData = async () => {
             const result = await axios.get(link);
-            console.log("result.data: ", result.data);
             setOffer(result.data);
         };
     fetchData();
@@ -380,14 +379,13 @@ function RideOfferPage() {
     );
 }
 
+// page for ride requests
 function RideSeekPage() {
     const [seek, setSeek] = useState([] );
-    const [offer, setOffer] = useState([]);
     const [from_u, setFrom] = useState('')
     const [to_u, setTo] = useState('')
     const [when_u_lte, setWhenLTE] = useState('')
     const [when_u_gte, setWhenGTE] = useState('')
-    const [cost_u, setCost] = useState('')
     const [link, setLink] = useState("http://localhost:8000/api/ride_offer/?format=json")
     useEffect(() => {
         const fetchData = async () => {
@@ -460,6 +458,7 @@ function RideSeekPage() {
     );
 }
 
+// page for Ride Request form
 function RideSeekForm() {
   const [name_u, setName] = useState('')
   const [from_u, setFrom] = useState('')
@@ -498,7 +497,7 @@ function RideSeekForm() {
                               <p class="text-success">Create another ride request</p>
                             </Link>                            
                           </div>
-
+  // check for successful submit
   return (
     isSent ?
 

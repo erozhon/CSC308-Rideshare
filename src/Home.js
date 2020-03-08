@@ -13,8 +13,6 @@ import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Image from "react-bootstrap/Image";
 import axios from 'axios';
-//import TimePicker from "antd/lib/time-picker";
-//import DatePicker from "antd/lib/date-picker";
 
 
 //create the links to the two different pages
@@ -39,8 +37,8 @@ export default function Home() {
 
               <Nav.Link href="#link">
                 <li>
-                  <Link to="/main">
-                    <p class="text-success">Main Feed</p>
+                  <Link to="/ride_offers">
+                    <p class="text-success">View Ride Offers</p>
                   </Link>
                 </li>
               </Nav.Link>
@@ -55,8 +53,8 @@ export default function Home() {
 
               <Nav.Link href="#form">
                 <li>
-                  <Link to="/driverform">
-                    <p class="text-success">Driver Form</p>
+                  <Link to="/ride_offer_form">
+                    <p class="text-success">Create Ride Offer</p>
                   </Link>
                 </li>
               </Nav.Link>
@@ -90,11 +88,11 @@ export default function Home() {
           <Route path="/profile">
             <ProfilePage />
           </Route>
-          <Route path="/main">
-            <MainPage />
+          <Route path="/ride_offers">
+            <RideOfferPage />
           </Route>
-          <Route path="/driverform">
-            <DriverForm />
+          <Route path="/ride_offer_form">
+            <RideOfferForm />
           </Route>
         </Switch>
       </div>
@@ -129,7 +127,7 @@ function ProfilePage() {
 }
 
 //this is the driver form
-function DriverForm() {
+function RideOfferForm() {
   const [name_u, setName] = useState('')
   const [from_u, setFrom] = useState('')
   const [to_u, setTo] = useState('')
@@ -166,11 +164,11 @@ function DriverForm() {
   const successMessage = 
                           <div>
                             <p>Offer post completed successfully!</p>                   
-                            <Link to="/main">
-                              <p class="text-success">Return back to Main Feed</p>
+                            <Link to="/ride_offers">
+                              <p class="text-success">View ride offers</p>
                             </Link>
-                            <Link to="/driverform" onClick={refreshPage}>
-                              <p class="text-success">Create another ride offering</p>
+                            <Link to="/ride_offer_form" onClick={refreshPage}>
+                              <p class="text-success">Create another ride offer</p>
                             </Link>                            
                           </div>
 
@@ -249,7 +247,6 @@ function DriverForm() {
 
       </Form.Group>
 
-
       <Form.Group controlId="formBasicCheckbox">
         <Form.Check 
           type="checkbox" 
@@ -266,8 +263,8 @@ function DriverForm() {
   
 }
 
-//this is the main page information
-function MainPage() {
+//this is the ride offer page information
+function RideOfferPage() {
     const [offer, setOffer] = useState([] );
     useEffect(() => {
         const fetchData = async () => {

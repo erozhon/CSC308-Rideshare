@@ -209,11 +209,12 @@ function RideOfferForm() {
     <Form.Text className="text-muted">
       We'll never share your personal information with anyone else.
     </Form.Text>
+    <br />
 
     <Form onSubmit={submit}>
       <Form.Group controlId="formBasicEmail">
-        <Form.Label>Name</Form.Label>
-        <input 
+        <Form.Label> </Form.Label>
+        <Input
           type="text" 
           placeholder="Name" 
           className="sizing" 
@@ -221,7 +222,21 @@ function RideOfferForm() {
           onChange={e => setName(e.target.value)}
         />
 
-        <Form.Label>To</Form.Label>
+        <br />
+        <br />
+
+        <Form.Label> </Form.Label>
+        <Input 
+          type="text" 
+          placeholder="From" 
+          className="sizing" 
+          value={from_u}
+          onChange={e => setFrom(e.target.value)}/>
+
+        <br />
+        <br />
+
+        <Form.Label> </Form.Label>
         <Input 
           type="text" 
           placeholder="To" 
@@ -230,16 +245,11 @@ function RideOfferForm() {
           onChange={e => setTo(e.target.value)}
         />
 
-        <Form.Label>From</Form.Label>
-        <Input 
-          type="text" 
-          placeholder="From" 
-          className="sizing" 
-          value={from_u}
-          onChange={e => setFrom(e.target.value)}/>
+        <br />
+        <br />
 
-        <Form.Label>When</Form.Label>
-        <input 
+        <Form.Label> </Form.Label>
+        <Input 
           type="datetime-local" 
           placeholder="DateTime" 
           className="sizing" 
@@ -247,7 +257,10 @@ function RideOfferForm() {
           onChange={e => setWhen(e.target.value)}
         />
 
-        <Form.Label>Cost</Form.Label>
+        <br />
+        <br />
+
+        <Form.Label> </Form.Label>
         <Input 
           placeholder="Cost" 
           className="sizing" 
@@ -255,7 +268,10 @@ function RideOfferForm() {
           onChange={e => setCost(e.target.value)}
         />
 
-        <Form.Label>Seats Available</Form.Label>
+        <br />
+        <br />
+
+        <Form.Label> </Form.Label>
         <Input 
           placeholder="Seats Available" 
           className="sizing" 
@@ -263,12 +279,15 @@ function RideOfferForm() {
           onChange={e => setSeats(e.target.value)}
         />
 
+        <br />
+        <br />
+
         <textarea 
           placeholder="Extra Details"
+          rows="3"
           value={extra_details_u}
           onChange={e => setExtraDetails(e.target.value)}
         />
-
       </Form.Group>
 
       <Form.Group controlId="formBasicCheckbox">
@@ -358,18 +377,22 @@ function RideOfferPage() {
             </Form>
           </div>
           <div>
-            <h1> Ride Offers </h1>
+            <h1 class="text-success"> Ride Offers</h1>
             <ul>
                 {offer.map(offer => (
                     <li>
-                        <Card title="" extra={<Icon type="user"/>} style = {{marginBottom: 20 + 'px'}}>
-                            <h2> {offer.name_u} offering {offer.from_u} to {offer.to_u}</h2>
-                            <p> When: {offer.when_u} </p>
-                            <p> Cost: ${offer.cost_u} </p>  
-                            <p> Seats: {offer.seats_u} <Icon type="user"/></p>                      
-                            <p> Details: </p>                        
-                            <p> {offer.will_drop_u ? "willing to drop off" : "not willing to drop off"} </p>
-                            <p> {offer.extra_details_u}</p>
+                        <Card border="success" title="" extra={<Icon type="user"/>} style = {{marginBottom: 20 + 'px'}}>
+                            <Card.Header type="bold">{offer.from_u} -> {offer.to_u}</Card.Header>
+                            <Card.Body>
+                              <Card.Text>
+                                <h6>Offered by: {offer.name_u}</h6>
+                                <h6>When: {offer.when_u}</h6>
+                                <h6>Cost: ${offer.cost_u}</h6>
+                                <h6>Seats: {offer.seats_u}</h6>
+                                <h6>{offer.will_drop_u ? "willing to drop off" : "not willing to drop off"}</h6>
+                                <h6>Note from Driver: {offer.extra_details_u}</h6>
+                              </Card.Text>
+                            </Card.Body> 
                         </Card>
                     </li>
                     ))}
@@ -523,6 +546,14 @@ function RideSeekForm() {
           onChange={e => setName(e.target.value)}
         />
 
+        <Form.Label>From</Form.Label>
+        <Input 
+          type="text" 
+          placeholder="From" 
+          className="sizing" 
+          value={from_u}
+          onChange={e => setFrom(e.target.value)}/>
+
         <Form.Label>To</Form.Label>
         <Input 
           type="text" 
@@ -531,14 +562,6 @@ function RideSeekForm() {
           value={to_u}
           onChange={e => setTo(e.target.value)}
         />
-
-        <Form.Label>From</Form.Label>
-        <Input 
-          type="text" 
-          placeholder="From" 
-          className="sizing" 
-          value={from_u}
-          onChange={e => setFrom(e.target.value)}/>
 
         <Form.Label>When</Form.Label>
         <input 

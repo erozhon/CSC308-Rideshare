@@ -24,10 +24,10 @@ from api.views import SearchViewSet
 from api.views import FilterViewSet
 
 router = routers.DefaultRouter()
-router.register(r'ride_offer', RideOfferViewSet, base_name='ride_offer')
-router.register(r'ride_seek', RideSeekViewSet, base_name='ride_seek')
-router.register(r'search', SearchViewSet, base_name='search')
-router.register(r'filter', FilterViewSet, base_name='filter')
+router.register(r'ride_offer', RideOfferViewSet, basename='ride_offer')
+router.register(r'ride_seek', RideSeekViewSet, basename='ride_seek')
+router.register(r'search', SearchViewSet, basename='search')
+router.register(r'filter', FilterViewSet, basename='filter')
 
 urlpatterns = [
     url(r'^api/', include(router.urls)),

@@ -511,10 +511,10 @@ function RideSeekForm() {
   const successMessage = 
                           <div>
                             <p>Ride offer post completed successfully!</p>                   
-                            <Link to="/ride_requests">
+                            <Link to="/ride_seeks">
                               <p class="text-success">View ride offers</p>
                             </Link>
-                            <Link to="/ride_request_form" onClick={refreshPage}>
+                            <Link to="/ride_seek_form" onClick={refreshPage}>
                               <p class="text-success">Create another ride offer</p>
                             </Link>                            
                           </div>

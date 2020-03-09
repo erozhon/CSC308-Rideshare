@@ -205,7 +205,7 @@ function RideOfferForm() {
 
     <div>
 
-    <h1 class = "text-success"> Create Ride Request</h1>
+    <h1 class = "text-success"> Create Ride Offer</h1>
     <Form.Text className="text-muted">
       We'll never share your personal information with anyone else.
     </Form.Text>
@@ -386,7 +386,7 @@ function RideSeekPage() {
     const [to_u, setTo] = useState('')
     const [when_u_lte, setWhenLTE] = useState('')
     const [when_u_gte, setWhenGTE] = useState('')
-    const [link, setLink] = useState("http://localhost:8000/api/ride_offer/?format=json")
+    const [link, setLink] = useState("http://localhost:8000/api/ride_seek/?format=json")
     useEffect(() => {
         const fetchData = async () => {
             const result = await axios.get(link);
@@ -397,7 +397,7 @@ function RideSeekPage() {
 
     const submit = e => {
       e.preventDefault()
-      setLink("http://localhost:8000/api/ride_offer/?from_u__icontains="+from_u+"&to_u__icontains="+to_u+"&when_u__lte="+when_u_lte+"&when_u__gte="+when_u_gte+"&format=json")      
+      setLink("http://localhost:8000/api/ride_seek/?from_u__icontains="+from_u+"&to_u__icontains="+to_u+"&when_u__lte="+when_u_lte+"&when_u__gte="+when_u_gte+"&format=json")      
     }
 
     return (
@@ -507,7 +507,7 @@ function RideSeekForm() {
 
     <div>
 
-    <h1 class = "text-success"> Create Ride Offer</h1>
+    <h1 class = "text-success"> Create Ride Request</h1>
     <Form.Text className="text-muted">
       We'll never share your personal information with anyone else.
     </Form.Text>

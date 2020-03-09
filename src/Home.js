@@ -172,9 +172,10 @@ function RideOfferForm() {
     })
     .then((response) => {
       console.log(response);
+      setIsSent(true);
     }, (error) => {
       console.log(error);
-    }).then(() => setIsSent(true));
+    });
   }
 
   const successMessage = 
@@ -301,12 +302,21 @@ function RideOfferForm() {
 //this is the ride offer page information
 function RideOfferPage() {
     const [offer, setOffer] = useState([]);
-    const [from_u, setFrom] = useState('')
-    const [to_u, setTo] = useState('')
-    const [when_u_lte, setWhenLTE] = useState('')
-    const [when_u_gte, setWhenGTE] = useState('')
-    const [cost_u, setCost] = useState('')
-    const [link, setLink] = useState("http://localhost:8000/api/ride_offer/?format=json")
+    const [from_u, setFrom] = useState('');
+    const [to_u, setTo] = useState('');
+    const [when_u_lte, setWhenLTE] = useState('');
+    const [when_u_gte, setWhenGTE] = useState('');
+    const [cost_u, setCost] = useState('');
+    const [link, setLink] = useState("http://localhost:8000/api/ride_offer/?format=json");
+    var options = {
+                    year: "numeric",
+                    month: "numeric",
+                    day: "numeric",
+                    hour: 'numeric', 
+                    minute: 'numeric', 
+                    second: 'numeric',
+                    timeZone: 'America/Los_Angeles'
+                  };
     useEffect(() => {
         const fetchData = async () => {
             const result = await axios.get(link);
@@ -380,7 +390,9 @@ function RideOfferPage() {
                             <Card.Body>
                               <Card.Text>
                                 <h6>Driver: {offer.name_u}</h6>
-                                <h6>When: {offer.when_u}</h6>
+                                <h6>
+                                  When: {offer.when_u}                                                                   
+                                </h6>
                                 <h6>Cost: ${offer.cost_u}</h6>
                                 <h6>Seats: {offer.seats_u}</h6>
                                 <h6>{offer.will_drop_u ? "willing to drop off" : "not willing to drop off"}</h6>
@@ -481,11 +493,11 @@ function RideSeekPage() {
 
 // page for Ride Request form
 function RideSeekForm() {
-  const [name_u, setName] = useState('')
-  const [from_u, setFrom] = useState('')
-  const [to_u, setTo] = useState('')
-  const [when_u, setWhen] = useState('')
-  const [extra_details_u, setExtraDetails] = useState('')
+  const [name_u, setName] = useState('');
+  const [from_u, setFrom] = useState('');
+  const [to_u, setTo] = useState('');
+  const [when_u, setWhen] = useState('');
+  const [extra_details_u, setExtraDetails] = useState('');
 
   const [isSent, setIsSent] = useState(false)
   const submit = e => {
@@ -503,9 +515,10 @@ function RideSeekForm() {
       })
       .then((response) => {
         console.log(response);
+        setIsSent(true);
       }, (error) => {
         console.log(error);
-      }).then(() => setIsSent(true))  
+      });
   }
 
   const successMessage = 

@@ -10,7 +10,7 @@ dist: trusty
 
 addons:
   sonarcloud:
-    organization: "kclever"
+    organization: "erozhon"
     token:
       secure: "**************************" # encrypted value of your token
 

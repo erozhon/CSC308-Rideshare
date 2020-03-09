@@ -419,46 +419,47 @@ function RideSeekPage() {
     return (
       <div>
         <div>
-          <h1> Filter by </h1>
+          <h5> Filter</h5>
           <Form inline onSubmit={submit}>
-            <FormControl
-              type="text"
-              placeholder="From"
-              className="mr-sm-2"
-              value={from_u}
-              onChange={e => setFrom(e.target.value)}
-            />
-            <FormControl
-              type="text"
-              placeholder="To"
-              className="mr-sm-2"
-              value={to_u}
-              onChange={e => setTo(e.target.value)}
-            />
-            <p> Rides before this time</p>
-            <FormControl
-              type="datetime-local"
-              placeholder="Rides before this time"
-              className="mr-sm-2"
-              value={when_u_lte}
-              onChange={e => setWhenLTE(e.target.value)}
-            />
-            <p> Rides after this time</p>
-            <FormControl
-              type="datetime-local"
-              placeholder="Rides after this time"
-              className="mr-sm-2"
-              value={when_u_gte}
-              onChange={e => setWhenGTE(e.target.value)}
-            />
-            <Button variant="outline-success" type="submit">
-              Filter
-            </Button>
-          </Form>
+              <Input inline onSumbit={submit}
+                placeholder="From" 
+                className="filter-size"
+                value={from_u}
+                onChange={e => setFrom(e.target.value)}
+              />
+
+              <Input inline onSubmit={submit}
+                placeholder="To" 
+                className="filter-size"
+                value={to_u}
+                onChange={e => setTo(e.target.value)}
+              />
+
+              <p> Before</p>
+              <Input inline onSubmit={submit}
+                type="datetime-local"
+                placeholder="Before" 
+                className="filter-size"
+                value={when_u_lte}
+                onChange={e => setWhenLTE(e.target.value)}
+              />
+
+              <p> After</p>
+              <Input inline onSubmit={submit}
+                type="datetime-local"
+                placeholder="After" 
+                className="filter-size"
+                value={when_u_gte}
+                onChange={e => setWhenGTE(e.target.value)}
+              />
+              <Button variant="outline-success" type="submit">
+                Filter
+              </Button>
+            </Form>
         </div>
         <div>
             <br />
-            <h1 class="text-success"> Ride Offers</h1>
+            <h1 class="text-success"> Ride Requests</h1>
             <ul>
                 {seek.map(seek => (
                         <Card border="success" title="" extra={<Icon type="user"/>} style = {{marginBottom: 20 + 'px'}}>
@@ -509,12 +510,12 @@ function RideSeekForm() {
 
   const successMessage = 
                           <div>
-                            <p>Ride request post completed successfully!</p>                   
-                            <Link to="/ride_seeks">
-                              <p class="text-success">View ride requests</p>
+                            <p>Ride offer post completed successfully!</p>                   
+                            <Link to="/ride_requests">
+                              <p class="text-success">View ride offers</p>
                             </Link>
-                            <Link to="/ride_seek_form" onClick={refreshPage}>
-                              <p class="text-success">Create another ride request</p>
+                            <Link to="/ride_request_form" onClick={refreshPage}>
+                              <p class="text-success">Create another ride offer</p>
                             </Link>                            
                           </div>
   // check for successful submit
@@ -531,11 +532,12 @@ function RideSeekForm() {
     <Form.Text className="text-muted">
       We'll never share your personal information with anyone else.
     </Form.Text>
+    <br />
 
     <Form onSubmit={submit}>
       <Form.Group controlId="formBasicEmail">
-        <Form.Label>Name</Form.Label>
-        <input 
+        <Form.Label> </Form.Label>
+        <Input
           type="text" 
           placeholder="Name" 
           className="sizing" 
@@ -543,7 +545,10 @@ function RideSeekForm() {
           onChange={e => setName(e.target.value)}
         />
 
-        <Form.Label>From</Form.Label>
+        <br />
+        <br />
+
+        <Form.Label> </Form.Label>
         <Input 
           type="text" 
           placeholder="From" 
@@ -551,7 +556,10 @@ function RideSeekForm() {
           value={from_u}
           onChange={e => setFrom(e.target.value)}/>
 
-        <Form.Label>To</Form.Label>
+        <br />
+        <br />
+
+        <Form.Label> </Form.Label>
         <Input 
           type="text" 
           placeholder="To" 
@@ -560,8 +568,11 @@ function RideSeekForm() {
           onChange={e => setTo(e.target.value)}
         />
 
-        <Form.Label>When</Form.Label>
-        <input 
+        <br />
+        <br />
+
+        <Form.Label> </Form.Label>
+        <Input 
           type="datetime-local" 
           placeholder="DateTime" 
           className="sizing" 
@@ -569,12 +580,15 @@ function RideSeekForm() {
           onChange={e => setWhen(e.target.value)}
         />
 
+        <br />
+        <br />
+
         <textarea 
           placeholder="Extra Details"
+          rows="3"
           value={extra_details_u}
           onChange={e => setExtraDetails(e.target.value)}
         />
-
       </Form.Group>
       <Button variant="success" type="submit">
       Submit

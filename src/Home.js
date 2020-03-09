@@ -144,14 +144,14 @@ function ProfilePage() {
 
 //this is the ride offer form
 function RideOfferForm() {
-  const [name_u, setName] = useState('')
-  const [from_u, setFrom] = useState('')
-  const [to_u, setTo] = useState('')
-  const [when_u, setWhen] = useState('')
-  const [cost_u, setCost] = useState('')
-  const [seats_u, setSeats] = useState('')
-  const [will_drop_u, setWillDrop] = useState(false)
-  const [extra_details_u, setExtraDetails] = useState('')
+  const [name_u, setName] = useState('');
+  const [from_u, setFrom] = useState('');
+  const [to_u, setTo] = useState('');
+  const [when_u, setWhen] = useState('');
+  const [cost_u, setCost] = useState('');
+  const [seats_u, setSeats] = useState('');
+  const [will_drop_u, setWillDrop] = useState(false);
+  const [extra_details_u, setExtraDetails] = useState('');
 
   const [isSent, setIsSent] = useState(false)
   const submit = e => {
@@ -395,7 +395,7 @@ function RideOfferPage() {
                                 </h6>
                                 <h6>Cost: ${offer.cost_u}</h6>
                                 <h6>Seats: {offer.seats_u}</h6>
-                                <h6>{offer.will_drop_u ? "willing to drop off" : "not willing to drop off"}</h6>
+                                <h6>{offer.will_drop_u ? "Willing to drop off along the way" : "Not willing to drop off along way"}</h6>
                                 <h6>Note from Driver: {offer.extra_details_u}</h6>
                               </Card.Text>
                             </Card.Body> 
@@ -410,10 +410,10 @@ function RideOfferPage() {
 // page for ride requests
 function RideSeekPage() {
     const [seek, setSeek] = useState([] );
-    const [from_u, setFrom] = useState('')
-    const [to_u, setTo] = useState('')
-    const [when_u_lte, setWhenLTE] = useState('')
-    const [when_u_gte, setWhenGTE] = useState('')
+    const [from_u, setFrom] = useState('');
+    const [to_u, setTo] = useState('');
+    const [when_u_lte, setWhenLTE] = useState('');
+    const [when_u_gte, setWhenGTE] = useState('');
     const [link, setLink] = useState("http://localhost:8000/api/ride_seek/?format=json")
     useEffect(() => {
         const fetchData = async () => {

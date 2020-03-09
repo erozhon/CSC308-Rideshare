@@ -91,14 +91,6 @@ export default function Home() {
                 </NavDropdown.Item>
               </NavDropdown>
             </Nav>
-            <Form inline>
-              <FormControl
-                type="text"
-                placeholder="Search"
-                className="mr-sm-2"
-              />
-              <Button variant="outline-success">Search</Button>
-            </Form>
           </Navbar.Collapse>
         </Navbar>
 
@@ -332,42 +324,44 @@ function RideOfferPage() {
     return (
         <div>
           <div>
-          <h1> Filter by </h1>
+          <h5>Filter</h5>
             <Form inline onSubmit={submit}>
-              <FormControl
-                type="text"
-                placeholder="From"
-                className="mr-sm-2"
+              <Input inline onSumbit={submit}
+                placeholder="From" 
+                className="filter-size"
                 value={from_u}
                 onChange={e => setFrom(e.target.value)}
               />
-              <FormControl
-                type="text"
-                placeholder="To"
-                className="mr-sm-2"
+
+              <Input inline onSubmit={submit}
+                placeholder="To" 
+                className="filter-size"
                 value={to_u}
                 onChange={e => setTo(e.target.value)}
               />
-              <p> Rides before this time</p>
-              <FormControl
+
+              <p> Before</p>
+              <Input inline onSubmit={submit}
                 type="datetime-local"
-                placeholder="Rides before this time"
-                className="mr-sm-2"
+                placeholder="Before" 
+                className="filter-size"
                 value={when_u_lte}
                 onChange={e => setWhenLTE(e.target.value)}
               />
-              <p> Rides after this time</p>
-              <FormControl
+
+              <p> After</p>
+              <Input inline onSubmit={submit}
                 type="datetime-local"
-                placeholder="Rides after this time"
-                className="mr-sm-2"
+                placeholder="After" 
+                className="filter-size"
                 value={when_u_gte}
                 onChange={e => setWhenGTE(e.target.value)}
               />
-              <FormControl
+
+              <Input inline onSubmit={submit}
                 type="text"
-                placeholder="Cost is less than equal to"
-                className="mr-sm-2"
+                placeholder="Cost (below)" 
+                className="filter-size"
                 value={cost_u}
                 onChange={e => setCost(e.target.value)}
               />
@@ -377,15 +371,15 @@ function RideOfferPage() {
             </Form>
           </div>
           <div>
+            <br />
             <h1 class="text-success"> Ride Offers</h1>
             <ul>
                 {offer.map(offer => (
-                    <li>
                         <Card border="success" title="" extra={<Icon type="user"/>} style = {{marginBottom: 20 + 'px'}}>
-                            <Card.Header type="bold">{offer.from_u} -> {offer.to_u}</Card.Header>
+                            <Card.Header>{offer.from_u} to {offer.to_u}</Card.Header>
                             <Card.Body>
                               <Card.Text>
-                                <h6>Offered by: {offer.name_u}</h6>
+                                <h6>Driver: {offer.name_u}</h6>
                                 <h6>When: {offer.when_u}</h6>
                                 <h6>Cost: ${offer.cost_u}</h6>
                                 <h6>Seats: {offer.seats_u}</h6>
@@ -394,7 +388,6 @@ function RideOfferPage() {
                               </Card.Text>
                             </Card.Body> 
                         </Card>
-                    </li>
                     ))}
             </ul>
           </div>
@@ -464,19 +457,23 @@ function RideSeekPage() {
           </Form>
         </div>
         <div>
-          <h1> Ride Requests </h1>
-          <ul>
-              {seek.map(seek => (
-                  <li>
-                      <Card title="" extra={<Icon type="user"/>} style = {{marginBottom: 20 + 'px'}}>
-                          <h2>{seek.name_u} seeking {seek.from_u} to {seek.to_u}</h2>
-                          <p>When: {seek.when_u} </p>
-                          <p>Details: {seek.extra_details_u} </p>
-                      </Card>
-                  </li>
-                  ))}
-          </ul>
-        </div>
+            <br />
+            <h1 class="text-success"> Ride Offers</h1>
+            <ul>
+                {seek.map(seek => (
+                        <Card border="success" title="" extra={<Icon type="user"/>} style = {{marginBottom: 20 + 'px'}}>
+                            <Card.Header>{seek.from_u} to {seek.to_u}</Card.Header>
+                            <Card.Body>
+                              <Card.Text>
+                                <h6>Rider: {seek.name_u}</h6>
+                                <h6>When: Around {seek.when_u}</h6>
+                                <h6>Note from Rider: {seek.extra_details_u}</h6>
+                              </Card.Text>
+                            </Card.Body> 
+                        </Card>
+                    ))}
+            </ul>
+          </div>
       </div>  
     );
 }

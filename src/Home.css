@@ -29,3 +29,7 @@
 .but {
   justify-content: flex-end;
 }
+
+.filter-size {
+  width: 15%
+}

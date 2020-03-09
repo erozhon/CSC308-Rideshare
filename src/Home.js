@@ -91,14 +91,6 @@ export default function Home() {
                 </NavDropdown.Item>
               </NavDropdown>
             </Nav>
-            <Form inline>
-              <FormControl
-                type="text"
-                placeholder="Search"
-                className="mr-sm-2"
-              />
-              <Button variant="outline-success">Search</Button>
-            </Form>
           </Navbar.Collapse>
         </Navbar>
 
@@ -205,15 +197,16 @@ function RideOfferForm() {
 
     <div>
 
-    <h1 class = "text-success"> Create Ride Request</h1>
+    <h1 class = "text-success"> Create Ride Offer</h1>
     <Form.Text className="text-muted">
       We'll never share your personal information with anyone else.
     </Form.Text>
+    <br />
 
     <Form onSubmit={submit}>
       <Form.Group controlId="formBasicEmail">
-        <Form.Label>Name</Form.Label>
-        <input 
+        <Form.Label> </Form.Label>
+        <Input
           type="text" 
           placeholder="Name" 
           className="sizing" 
@@ -221,7 +214,21 @@ function RideOfferForm() {
           onChange={e => setName(e.target.value)}
         />
 
-        <Form.Label>To</Form.Label>
+        <br />
+        <br />
+
+        <Form.Label> </Form.Label>
+        <Input 
+          type="text" 
+          placeholder="From" 
+          className="sizing" 
+          value={from_u}
+          onChange={e => setFrom(e.target.value)}/>
+
+        <br />
+        <br />
+
+        <Form.Label> </Form.Label>
         <Input 
           type="text" 
           placeholder="To" 
@@ -230,16 +237,11 @@ function RideOfferForm() {
           onChange={e => setTo(e.target.value)}
         />
 
-        <Form.Label>From</Form.Label>
-        <Input 
-          type="text" 
-          placeholder="From" 
-          className="sizing" 
-          value={from_u}
-          onChange={e => setFrom(e.target.value)}/>
+        <br />
+        <br />
 
-        <Form.Label>When</Form.Label>
-        <input 
+        <Form.Label> </Form.Label>
+        <Input 
           type="datetime-local" 
           placeholder="DateTime" 
           className="sizing" 
@@ -247,7 +249,10 @@ function RideOfferForm() {
           onChange={e => setWhen(e.target.value)}
         />
 
-        <Form.Label>Cost</Form.Label>
+        <br />
+        <br />
+
+        <Form.Label> </Form.Label>
         <Input 
           placeholder="Cost" 
           className="sizing" 
@@ -255,7 +260,10 @@ function RideOfferForm() {
           onChange={e => setCost(e.target.value)}
         />
 
-        <Form.Label>Seats Available</Form.Label>
+        <br />
+        <br />
+
+        <Form.Label> </Form.Label>
         <Input 
           placeholder="Seats Available" 
           className="sizing" 
@@ -263,12 +271,15 @@ function RideOfferForm() {
           onChange={e => setSeats(e.target.value)}
         />
 
+        <br />
+        <br />
+
         <textarea 
           placeholder="Extra Details"
+          rows="3"
           value={extra_details_u}
           onChange={e => setExtraDetails(e.target.value)}
         />
-
       </Form.Group>
 
       <Form.Group controlId="formBasicCheckbox">
@@ -313,42 +324,44 @@ function RideOfferPage() {
     return (
         <div>
           <div>
-          <h1> Filter by </h1>
+          <h5>Filter</h5>
             <Form inline onSubmit={submit}>
-              <FormControl
-                type="text"
-                placeholder="From"
-                className="mr-sm-2"
+              <Input inline onSumbit={submit}
+                placeholder="From" 
+                className="filter-size"
                 value={from_u}
                 onChange={e => setFrom(e.target.value)}
               />
-              <FormControl
-                type="text"
-                placeholder="To"
-                className="mr-sm-2"
+
+              <Input inline onSubmit={submit}
+                placeholder="To" 
+                className="filter-size"
                 value={to_u}
                 onChange={e => setTo(e.target.value)}
               />
-              <p> Rides before this time</p>
-              <FormControl
+
+              <p> Before</p>
+              <Input inline onSubmit={submit}
                 type="datetime-local"
-                placeholder="Rides before this time"
-                className="mr-sm-2"
+                placeholder="Before" 
+                className="filter-size"
                 value={when_u_lte}
                 onChange={e => setWhenLTE(e.target.value)}
               />
-              <p> Rides after this time</p>
-              <FormControl
+
+              <p> After</p>
+              <Input inline onSubmit={submit}
                 type="datetime-local"
-                placeholder="Rides after this time"
-                className="mr-sm-2"
+                placeholder="After" 
+                className="filter-size"
                 value={when_u_gte}
                 onChange={e => setWhenGTE(e.target.value)}
               />
-              <FormControl
+
+              <Input inline onSubmit={submit}
                 type="text"
-                placeholder="Cost is less than equal to"
-                className="mr-sm-2"
+                placeholder="Cost (below)" 
+                className="filter-size"
                 value={cost_u}
                 onChange={e => setCost(e.target.value)}
               />
@@ -358,20 +371,23 @@ function RideOfferPage() {
             </Form>
           </div>
           <div>
-            <h1> Ride Offers </h1>
+            <br />
+            <h1 class="text-success"> Ride Offers</h1>
             <ul>
                 {offer.map(offer => (
-                    <li>
-                        <Card title="" extra={<Icon type="user"/>} style = {{marginBottom: 20 + 'px'}}>
-                            <h2> {offer.name_u} offering {offer.from_u} to {offer.to_u}</h2>
-                            <p> When: {offer.when_u} </p>
-                            <p> Cost: ${offer.cost_u} </p>  
-                            <p> Seats: {offer.seats_u} <Icon type="user"/></p>                      
-                            <p> Details: </p>                        
-                            <p> {offer.will_drop_u ? "willing to drop off" : "not willing to drop off"} </p>
-                            <p> {offer.extra_details_u}</p>
+                        <Card border="success" title="" extra={<Icon type="user"/>} style = {{marginBottom: 20 + 'px'}}>
+                            <Card.Header>{offer.from_u} to {offer.to_u}</Card.Header>
+                            <Card.Body>
+                              <Card.Text>
+                                <h6>Driver: {offer.name_u}</h6>
+                                <h6>When: {offer.when_u}</h6>
+                                <h6>Cost: ${offer.cost_u}</h6>
+                                <h6>Seats: {offer.seats_u}</h6>
+                                <h6>{offer.will_drop_u ? "willing to drop off" : "not willing to drop off"}</h6>
+                                <h6>Note from Driver: {offer.extra_details_u}</h6>
+                              </Card.Text>
+                            </Card.Body> 
                         </Card>
-                    </li>
                     ))}
             </ul>
           </div>
@@ -386,7 +402,7 @@ function RideSeekPage() {
     const [to_u, setTo] = useState('')
     const [when_u_lte, setWhenLTE] = useState('')
     const [when_u_gte, setWhenGTE] = useState('')
-    const [link, setLink] = useState("http://localhost:8000/api/ride_offer/?format=json")
+    const [link, setLink] = useState("http://localhost:8000/api/ride_seek/?format=json")
     useEffect(() => {
         const fetchData = async () => {
             const result = await axios.get(link);
@@ -397,63 +413,68 @@ function RideSeekPage() {
 
     const submit = e => {
       e.preventDefault()
-      setLink("http://localhost:8000/api/ride_offer/?from_u__icontains="+from_u+"&to_u__icontains="+to_u+"&when_u__lte="+when_u_lte+"&when_u__gte="+when_u_gte+"&format=json")      
+      setLink("http://localhost:8000/api/ride_seek/?from_u__icontains="+from_u+"&to_u__icontains="+to_u+"&when_u__lte="+when_u_lte+"&when_u__gte="+when_u_gte+"&format=json")      
     }
 
     return (
       <div>
         <div>
-          <h1> Filter by </h1>
+          <h5> Filter</h5>
           <Form inline onSubmit={submit}>
-            <FormControl
-              type="text"
-              placeholder="From"
-              className="mr-sm-2"
-              value={from_u}
-              onChange={e => setFrom(e.target.value)}
-            />
-            <FormControl
-              type="text"
-              placeholder="To"
-              className="mr-sm-2"
-              value={to_u}
-              onChange={e => setTo(e.target.value)}
-            />
-            <p> Rides before this time</p>
-            <FormControl
-              type="datetime-local"
-              placeholder="Rides before this time"
-              className="mr-sm-2"
-              value={when_u_lte}
-              onChange={e => setWhenLTE(e.target.value)}
-            />
-            <p> Rides after this time</p>
-            <FormControl
-              type="datetime-local"
-              placeholder="Rides after this time"
-              className="mr-sm-2"
-              value={when_u_gte}
-              onChange={e => setWhenGTE(e.target.value)}
-            />
-            <Button variant="outline-success" type="submit">
-              Filter
-            </Button>
-          </Form>
+              <Input inline onSumbit={submit}
+                placeholder="From" 
+                className="filter-size"
+                value={from_u}
+                onChange={e => setFrom(e.target.value)}
+              />
+
+              <Input inline onSubmit={submit}
+                placeholder="To" 
+                className="filter-size"
+                value={to_u}
+                onChange={e => setTo(e.target.value)}
+              />
+
+              <p> Before</p>
+              <Input inline onSubmit={submit}
+                type="datetime-local"
+                placeholder="Before" 
+                className="filter-size"
+                value={when_u_lte}
+                onChange={e => setWhenLTE(e.target.value)}
+              />
+
+              <p> After</p>
+              <Input inline onSubmit={submit}
+                type="datetime-local"
+                placeholder="After" 
+                className="filter-size"
+                value={when_u_gte}
+                onChange={e => setWhenGTE(e.target.value)}
+              />
+              <Button variant="outline-success" type="submit">
+                Filter
+              </Button>
+            </Form>
         </div>
         <div>
-          <h1> Ride Requests </h1>
-          <ul>
-              {seek.map(seek => (
-                  <li>
-                      <Card title="" extra={<Icon type="user"/>} style = {{marginBottom: 20 + 'px'}}>
-                          <h2>{seek.name_u} seeking {seek.from_u} to {seek.to_u}</h2>
-                          <p>When: {seek.when_u} </p>
-                          <p>Details: {seek.extra_details_u} </p>
-                      </Card>
-                  </li>
-                  ))}
-          </ul>
-        </div>
+            <br />
+            <h1 class="text-success"> Ride Requests</h1>
+            <ul>
+                {seek.map(seek => (
+                        <Card border="success" title="" extra={<Icon type="user"/>} style = {{marginBottom: 20 + 'px'}}>
+                            <Card.Header>{seek.from_u} to {seek.to_u}</Card.Header>
+                            <Card.Body>
+                              <Card.Text>
+                                <h6>Rider: {seek.name_u}</h6>
+                                <h6>When: Around {seek.when_u}</h6>
+                                <h6>Note from Rider: {seek.extra_details_u}</h6>
+                              </Card.Text>
+                            </Card.Body> 
+                        </Card>
+                    ))}
+            </ul>
+          </div>
       </div>  
     );
 }
@@ -489,12 +510,12 @@ function RideSeekForm() {
 
   const successMessage = 
                           <div>
-                            <p>Ride request post completed successfully!</p>                   
+                            <p>Ride offer post completed successfully!</p>                   
                             <Link to="/ride_seeks">
-                              <p class="text-success">View ride requests</p>
+                              <p class="text-success">View ride offers</p>
                             </Link>
                             <Link to="/ride_seek_form" onClick={refreshPage}>
-                              <p class="text-success">Create another ride request</p>
+                              <p class="text-success">Create another ride offer</p>
                             </Link>                            
                           </div>
   // check for successful submit
@@ -507,15 +528,16 @@ function RideSeekForm() {
 
     <div>
 
-    <h1 class = "text-success"> Create Ride Offer</h1>
+    <h1 class = "text-success"> Create Ride Request</h1>
     <Form.Text className="text-muted">
       We'll never share your personal information with anyone else.
     </Form.Text>
+    <br />
 
     <Form onSubmit={submit}>
       <Form.Group controlId="formBasicEmail">
-        <Form.Label>Name</Form.Label>
-        <input 
+        <Form.Label> </Form.Label>
+        <Input
           type="text" 
           placeholder="Name" 
           className="sizing" 
@@ -523,7 +545,21 @@ function RideSeekForm() {
           onChange={e => setName(e.target.value)}
         />
 
-        <Form.Label>To</Form.Label>
+        <br />
+        <br />
+
+        <Form.Label> </Form.Label>
+        <Input 
+          type="text" 
+          placeholder="From" 
+          className="sizing" 
+          value={from_u}
+          onChange={e => setFrom(e.target.value)}/>
+
+        <br />
+        <br />
+
+        <Form.Label> </Form.Label>
         <Input 
           type="text" 
           placeholder="To" 
@@ -532,16 +568,11 @@ function RideSeekForm() {
           onChange={e => setTo(e.target.value)}
         />
 
-        <Form.Label>From</Form.Label>
-        <Input 
-          type="text" 
-          placeholder="From" 
-          className="sizing" 
-          value={from_u}
-          onChange={e => setFrom(e.target.value)}/>
+        <br />
+        <br />
 
-        <Form.Label>When</Form.Label>
-        <input 
+        <Form.Label> </Form.Label>
+        <Input 
           type="datetime-local" 
           placeholder="DateTime" 
           className="sizing" 
@@ -549,12 +580,15 @@ function RideSeekForm() {
           onChange={e => setWhen(e.target.value)}
         />
 
+        <br />
+        <br />
+
         <textarea 
           placeholder="Extra Details"
+          rows="3"
           value={extra_details_u}
           onChange={e => setExtraDetails(e.target.value)}
         />
-
       </Form.Group>
       <Button variant="success" type="submit">
       Submit

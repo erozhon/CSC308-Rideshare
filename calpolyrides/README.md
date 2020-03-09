@@ -62,7 +62,7 @@ pip3 install djangorestframework
 
 Install cors headers
 ```
-install django-cors-headers
+pip3 install django-cors-headers
 ```
 
 Install django-filter
@@ -77,6 +77,11 @@ pip3 install django-filter
 3. django-admin migrate
 4. django-admin runserver
 5. Go to http://localhost:8000/api/item/ to view site
+
+If django-admin doesn't work, in the folder with manage.py (first calpolyrides):
+1. python3 manage.py makemigrations
+2. python3 manage.py migrate
+3. python3 manage.py runserver
 
 If make changes to database items delete the database file that will be create locally: looks like db.sqlite3
 Also delete all 00##_initial.py files in api/migrations/__pycache__

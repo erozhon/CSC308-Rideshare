@@ -98,9 +98,7 @@ function LogoutView({ onClick }) {
   return (
     <div>
       <span>You are logged in as {user.email}</span>
-        <Link to="/logged_out">
-          <button onClick={onClick}>Logout</button>
-        </Link>
+        <button onClick={onClick}>Logout</button>
     </div>
   );
 }
@@ -265,10 +263,7 @@ export default function Home() {
           </Route>   
           <Route path="/ride_seek_form">
             <RideSeekForm />
-          </Route>     
-          <Route path="/logged_out">
-            <LogoutPage />
-          </Route>        
+          </Route>            
         </Switch>
       </div>
     </Router>
@@ -294,32 +289,34 @@ function ProfilePage() {
   const requestLogout = useCallback(() => {
     logout();
   });
-
-  return (
-    <div>
-      <UserProvider value={user}>
-        <LogoutView onClick={requestLogout} error={error}/>
-      </UserProvider>
-      <Card border="success" style={{ width: "100rem" }}>
-        <Card.Header> Your Profile</Card.Header>
-        <Card.Body>
-          <Card.Title>Karson Slocum</Card.Title>
-          <Card.Text>
-            Year : Senior Major : Comp Sci Rating : 4.5/5
-            <br />
-            <br />
-            <h5>Car Information</h5>
-            Make/Model : Mazda 3 Seats : 4
-            <br />
-            <br />
-            <h5>Contact Information</h5>
-            Phone Number : 888-888-8888 Email : Kslocum@calpoly.edu
-          </Card.Text>
-        </Card.Body>
-      </Card>
-      <br />
-    </div>
-  );
+  if (user.loggedIn) {
+    return (
+      <div>
+        <UserProvider value={user}>
+          <LogoutView onClick={requestLogout} error={error}/>
+        </UserProvider>
+        <Card border="success" style={{ width: "100rem" }}>
+          <Card.Header> Your Profile</Card.Header>
+          <Card.Body>
+            <Card.Title>Karson Slocum</Card.Title>
+            <Card.Text>
+              Year : Senior Major : Comp Sci Rating : 4.5/5
+              <br />
+              <br />
+              <h5>Car Information</h5>
+              Make/Model : Mazda 3 Seats : 4
+              <br />
+              <br />
+              <h5>Contact Information</h5>
+              Phone Number : 888-888-8888 Email : Kslocum@calpoly.edu
+            </Card.Text>
+          </Card.Body>
+        </Card>
+        <br />
+      </div>
+    );
+  }
+  return (<LogoutPage />)
 }
 
 //this is the ride offer form

@@ -128,9 +128,72 @@ function LoginPage() {
 }
 
 
-//create the links to the two different pages
+function signup(email, password) {
+  return new Promise((resolve, reject) => {
+    firebase
+      .auth()
+      .createUserWithEmailAndPassword(email, password)
+      .then(() => resolve())
+      .catch(error => reject(error));
+  });
+}
 
-export default function Home() {
+function SignupView({ onClick }) {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  return (
+    <div>
+      <input
+        placeholder="email"
+        type="email"
+        onChange={event => {
+          setEmail(event.target.value);
+        }}
+      />
+      <input
+        placeholder="password"
+        type="password"
+        onChange={event => {
+          setPassword(event.target.value);
+        }}
+      />
+      <button
+        onClick={() => {
+          onClick(email, password);
+        }}
+      >
+        Sign up
+      </button>
+    </div>
+  );
+}
+
+export default function SignupPage() {
+  const [user, setUser] = useState({ loggedIn: false });
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChange(setUser);
+    return () => {
+      unsubscribe();
+    };
+  }, []);
+
+  const requestSignup = useCallback((email, password) => {
+    signup(email, password).catch(error => setError(error.code));
+  });
+
+  if (!user.loggedIn) {
+    return <SignupView onClick={requestSignup} error={error}/>;
+  }
+  return (
+    <UserProvider value={user}>
+      <Home />
+    </UserProvider>
+  );
+}
+// home landing page for signup/signin
+function Home() {
   return (
     <Router>
       <div>

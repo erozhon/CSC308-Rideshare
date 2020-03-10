@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect, useContext, useCallback } from "react";
 import {Icon, Input} from 'antd';
 import "./Home.css";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
@@ -12,6 +12,120 @@ import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Image from "react-bootstrap/Image";
 import axios from 'axios';
+import firebase from 'firebase/app';
+import 'firebase/auth';
+
+var firebaseConfig = {
+  apiKey: "AIzaSyC3QhKrAi82Xu20PY6KqFBvKOU6nCe_LDQ",
+  authDomain: "calpolyrideshare-3e5ed.firebaseapp.com",
+  databaseURL: "https://calpolyrideshare-3e5ed.firebaseio.com",
+  projectId: "calpolyrideshare-3e5ed",
+  /*storageBucket: "calpolyrideshare-3e5ed.appspot.com",*/
+  /*messagingSenderId: "836131646011",*/
+  appId: "1:836131646011:web:83b589c736e80a1c0b0a1e",
+  measurementId: "G-JPNEYJY8KH"
+};
+
+firebase.initializeApp(firebaseConfig);
+
+const defaultUser = { loggedIn: false, email: "" };
+
+const UserContext = React.createContext(defaultUser);
+const UserProvider = UserContext.Provider;
+const UserConsumer = UserContext.Consumer;
+
+function onAuthStateChange(callback) {
+  return firebase.auth().onAuthStateChanged(user => {
+    if (user) {
+      callback({loggedIn: true, email: user.email});
+    } else {
+      callback({loggedIn: false});
+    }
+  });
+}
+
+function login(username, password) {
+  return new Promise((resolve, reject) => {
+    firebase
+      .auth()
+      .signInWithEmailAndPassword(username, password)
+      .then(() => resolve())
+      .catch(error => reject(error));
+  });
+}
+
+function LoginView({ onClick }) {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  return (
+    <div>
+      <input
+        placeholder="email"
+        type="email"
+        onChange={event => {
+          setUsername(event.target.value);
+        }}
+      />
+      <input
+        placeholder="password"
+        type="password"
+        onChange={event => {
+          setPassword(event.target.value);
+        }}
+      />
+      <button
+        onClick={() => {
+          onClick(username, password);
+        }}
+      >
+        Login
+      </button>
+    </div>
+  );
+}
+
+function LogoutView({ onClick }) {
+  const user = useContext(UserContext);
+  return (
+    <div>
+      <span>You are logged in as {user.email}</span>
+      <button onClick={onClick}>Logout</button>
+    </div>
+  );
+}
+
+function logout() {
+  firebase.auth().signOut();
+}
+
+function LoginPage() {
+  const [user, setUser] = useState({ loggedIn: false });
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChange(setUser);
+    return () => {
+      unsubscribe();
+    };
+  }, []);
+
+  const requestLogin = useCallback((username, password) => {
+    login(username, password).catch(error => setError(error.code));
+  });
+
+  const requestLogout = useCallback(() => {
+    logout();
+  });
+
+  if (!user.loggedIn) {
+    return <LoginView onClick={requestLogin} error={error}/>;
+  }
+  return (
+    <UserProvider value={user}>
+      <LogoutView onClick={requestLogout} />
+    </UserProvider>
+  );
+}
 
 
 //create the links to the two different pages
@@ -73,9 +187,13 @@ export default function Home() {
                   </Link>
                 </li>
               </Nav.Link>
-
-
-
+              <Nav.Link href="#home">
+                <li>
+                  <Link to="/login">
+                    <p class="text-success">Login</p>
+                  </Link>
+                </li>
+              </Nav.Link>
             
             </Nav>
           </Navbar.Collapse>
@@ -96,7 +214,10 @@ export default function Home() {
           </Route>   
           <Route path="/ride_seek_form">
             <RideSeekForm />
-          </Route>             
+          </Route>  
+          <Route path="/login">
+            <LoginPage />
+          </Route>            
         </Switch>
       </div>
     </Router>

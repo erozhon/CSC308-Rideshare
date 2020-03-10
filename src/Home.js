@@ -84,12 +84,23 @@ function LoginView({ onClick }) {
   );
 }
 
+function LogoutPage()
+{
+  return (
+    <div>
+    <p> You logged out </p>
+    </div>
+  )
+}
+
 function LogoutView({ onClick }) {
   const user = useContext(UserContext);
   return (
     <div>
       <span>You are logged in as {user.email}</span>
-      <button onClick={onClick}>Logout</button>
+        <Link to="/logged_out">
+          <button onClick={onClick}>Logout</button>
+        </Link>
     </div>
   );
 }
@@ -97,36 +108,6 @@ function LogoutView({ onClick }) {
 function logout() {
   firebase.auth().signOut();
 }
-
-function LoginPage() {
-  const [user, setUser] = useState({ loggedIn: false });
-  const [error, setError] = useState("");
-
-  useEffect(() => {
-    const unsubscribe = onAuthStateChange(setUser);
-    return () => {
-      unsubscribe();
-    };
-  }, []);
-
-  const requestLogin = useCallback((username, password) => {
-    login(username, password).catch(error => setError(error.code));
-  });
-
-  const requestLogout = useCallback(() => {
-    logout();
-  });
-
-  if (!user.loggedIn) {
-    return <LoginView onClick={requestLogin} error={error}/>;
-  }
-  return (
-    <UserProvider value={user}>
-      <LogoutView onClick={requestLogout} />
-    </UserProvider>
-  );
-}
-
 
 function signup(email, password) {
   return new Promise((resolve, reject) => {
@@ -168,7 +149,9 @@ function SignupView({ onClick }) {
   );
 }
 
-export default function SignupPage() {
+// home for signup/signin or landing page
+export default function Home() {
+
   const [user, setUser] = useState({ loggedIn: false });
   const [error, setError] = useState("");
 
@@ -183,17 +166,78 @@ export default function SignupPage() {
     signup(email, password).catch(error => setError(error.code));
   });
 
-  if (!user.loggedIn) {
-    return <SignupView onClick={requestSignup} error={error}/>;
-  }
-  return (
+  const requestLogin = useCallback((username, password) => {
+    login(username, password).catch(error => setError(error.code));
+  });
+
+  const landingPage = (
+    <div>
+        <SignupView onClick={requestSignup} error={error}/>
+        <LoginView onClick={requestLogin} error={error}/>
+    </div>); 
+
+  const homePage = (
     <UserProvider value={user}>
-      <Home />
+      <Navbar bg="light" expand="lg">
+        <Navbar.Brand>
+          <p class="text-success">CALPOLYRIDES</p>
+        </Navbar.Brand>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="mr-auto">
+
+            <Nav.Link href="#link">
+              <li>
+                <Link to="/ride_offers">
+                  <p class="text-success">View Ride Offers</p>
+                </Link>
+              </li>
+            </Nav.Link>
+
+            <Nav.Link href="#form">
+              <li>
+                <Link to="/ride_offer_form">
+                  <p class="text-success">Create Ride Offer</p>
+                </Link>
+              </li>
+            </Nav.Link> 
+            
+            <Nav.Link href="#link">
+              <li>
+                <Link to="/ride_seeks">
+                  <p class="text-success">View Ride Requests</p>
+                </Link>
+              </li>
+            </Nav.Link>   
+
+            <Nav.Link href="#form">
+              <li>
+                <Link to="/ride_seek_form">
+                  <p class="text-success">Create Ride Request</p>
+                </Link>
+              </li>
+            </Nav.Link>           
+
+            <Nav.Link href="#home">
+              <li>
+                <Link to="/profile">
+                  <p class="text-success">Profile</p>
+                </Link>
+              </li>
+            </Nav.Link>
+          
+          </Nav>
+        </Navbar.Collapse>
+      </Navbar>
     </UserProvider>
   );
-}
-// home landing page for signup/signin
-function Home() {
+
+  var displayPage = landingPage;
+
+  if (user.loggedIn) {
+    displayPage = homePage;
+  }
+
   return (
     <Router>
       <div>
@@ -203,64 +247,8 @@ function Home() {
             roundedCircle
           />
         </Col>
-        <Navbar bg="light" expand="lg">
-          <Navbar.Brand>
-            <p class="text-success">CALPOLYRIDES</p>
-          </Navbar.Brand>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="mr-auto">
-
-              <Nav.Link href="#link">
-                <li>
-                  <Link to="/ride_offers">
-                    <p class="text-success">View Ride Offers</p>
-                  </Link>
-                </li>
-              </Nav.Link>
-
-              <Nav.Link href="#form">
-                <li>
-                  <Link to="/ride_offer_form">
-                    <p class="text-success">Create Ride Offer</p>
-                  </Link>
-                </li>
-              </Nav.Link> 
-              
-              <Nav.Link href="#link">
-                <li>
-                  <Link to="/ride_seeks">
-                    <p class="text-success">View Ride Requests</p>
-                  </Link>
-                </li>
-              </Nav.Link>   
-
-              <Nav.Link href="#form">
-                <li>
-                  <Link to="/ride_seek_form">
-                    <p class="text-success">Create Ride Request</p>
-                  </Link>
-                </li>
-              </Nav.Link>           
-
-              <Nav.Link href="#home">
-                <li>
-                  <Link to="/profile">
-                    <p class="text-success">Profile</p>
-                  </Link>
-                </li>
-              </Nav.Link>
-              <Nav.Link href="#home">
-                <li>
-                  <Link to="/login">
-                    <p class="text-success">Login</p>
-                  </Link>
-                </li>
-              </Nav.Link>
-            
-            </Nav>
-          </Navbar.Collapse>
-        </Navbar>
+       
+        {displayPage} 
 
         <Switch>
           <Route path="/profile">
@@ -277,10 +265,10 @@ function Home() {
           </Route>   
           <Route path="/ride_seek_form">
             <RideSeekForm />
-          </Route>  
-          <Route path="/login">
-            <LoginPage />
-          </Route>            
+          </Route>     
+          <Route path="/logged_out">
+            <LogoutPage />
+          </Route>        
         </Switch>
       </div>
     </Router>
@@ -289,8 +277,29 @@ function Home() {
 
 //this is the profile page information
 function ProfilePage() {
+  const [user, setUser] = useState({ loggedIn: false });
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChange(setUser);
+    return () => {
+      unsubscribe();
+    };
+  }, []);
+
+  const requestLogin = useCallback((username, password) => {
+    login(username, password).catch(error => setError(error.code));
+  });
+
+  const requestLogout = useCallback(() => {
+    logout();
+  });
+
   return (
     <div>
+      <UserProvider value={user}>
+        <LogoutView onClick={requestLogout} error={error}/>
+      </UserProvider>
       <Card border="success" style={{ width: "100rem" }}>
         <Card.Header> Your Profile</Card.Header>
         <Card.Body>

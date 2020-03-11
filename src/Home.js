@@ -282,10 +282,6 @@ function ProfilePage() {
     };
   }, []);
 
-  const requestLogin = useCallback((username, password) => {
-    login(username, password).catch(error => setError(error.code));
-  });
-
   const requestLogout = useCallback(() => {
     logout();
   });
@@ -497,7 +493,6 @@ function RideOfferPage() {
     const [to_u, setTo] = useState('');
     const [when_u_lte, setWhenLTE] = useState('');
     const [when_u_gte, setWhenGTE] = useState('');
-    const [contact_u, setContact] = useState('');
     const [cost_u, setCost] = useState('');
     const [link, setLink] = useState("http://localhost:8000/api/ride_offer/?format=json");
     var options = {
@@ -607,7 +602,6 @@ function RideSeekPage() {
     const [to_u, setTo] = useState('');
     const [when_u_lte, setWhenLTE] = useState('');
     const [when_u_gte, setWhenGTE] = useState('');
-    const [contact_u, setContact] = useState('');
     const [link, setLink] = useState("http://localhost:8000/api/ride_seek/?format=json")
     useEffect(() => {
         const fetchData = async () => {

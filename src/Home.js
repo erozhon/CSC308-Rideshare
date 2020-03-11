@@ -585,10 +585,13 @@ function RideOfferPage() {
                                 <h6>Contact: {offer.contact_u}</h6>
                                 <h6>{offer.will_drop_u ? "Willing to drop off along the way" : "Not willing to drop off along way"}</h6>
                                 <h6>Note from Driver: {offer.extra_details_u}</h6>
+                                <h6>Map Link: <a href='https://www.google.com/maps/dir/{offer.from_u}/{offer.to_u}' target="_blank"> Google Maps Link! </a></h6>
                               </Card.Text>
                             </Card.Body> 
                         </Card>
-                    ))}
+                    )
+                  )
+                }
             </ul>
           </div>
         </div>

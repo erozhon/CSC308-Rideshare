@@ -328,6 +328,7 @@ function RideOfferForm() {
   const [cost_u, setCost] = useState('');
   const [seats_u, setSeats] = useState('');
   const [will_drop_u, setWillDrop] = useState(false);
+  const [contact_u, setContact] = useState('');
   const [extra_details_u, setExtraDetails] = useState('');
 
   const [isSent, setIsSent] = useState(false)
@@ -344,6 +345,7 @@ function RideOfferForm() {
         "seats_u": seats_u,
         "cost_u": cost_u,
         "will_drop_u": will_drop_u,
+        "contact_u": contact_u,
         "extra_details_u": extra_details_u
       }
     })
@@ -452,6 +454,18 @@ function RideOfferForm() {
         <br />
         <br />
 
+        <Form.Label> </Form.Label>
+        <Input
+          type="text"
+          placeholder="Your Contact Information"
+          className="sizing"
+          value={contact_u}
+          onChange={e => setContact(e.target.value)}
+        />
+
+        <br />
+        <br />
+
         <textarea 
           placeholder="Extra Details"
           rows="3"
@@ -483,6 +497,7 @@ function RideOfferPage() {
     const [to_u, setTo] = useState('');
     const [when_u_lte, setWhenLTE] = useState('');
     const [when_u_gte, setWhenGTE] = useState('');
+    const [contact_u, setContact] = useState('');
     const [cost_u, setCost] = useState('');
     const [link, setLink] = useState("http://localhost:8000/api/ride_offer/?format=json");
     var options = {
@@ -572,6 +587,7 @@ function RideOfferPage() {
                                 </h6>
                                 <h6>Cost: ${offer.cost_u}</h6>
                                 <h6>Seats: {offer.seats_u}</h6>
+                                <h6>Contact: {offer.contact_u}</h6>
                                 <h6>{offer.will_drop_u ? "Willing to drop off along the way" : "Not willing to drop off along way"}</h6>
                                 <h6>Note from Driver: {offer.extra_details_u}</h6>
                               </Card.Text>
@@ -591,6 +607,7 @@ function RideSeekPage() {
     const [to_u, setTo] = useState('');
     const [when_u_lte, setWhenLTE] = useState('');
     const [when_u_gte, setWhenGTE] = useState('');
+    const [contact_u, setContact] = useState('');
     const [link, setLink] = useState("http://localhost:8000/api/ride_seek/?format=json")
     useEffect(() => {
         const fetchData = async () => {
@@ -657,6 +674,7 @@ function RideSeekPage() {
                               <Card.Text>
                                 <h6>Rider: {seek.name_u}</h6>
                                 <h6>When: Around {seek.when_u}</h6>
+                                <h6>Contact Information: {seek.contact_u}</h6>
                                 <h6>Note from Rider: {seek.extra_details_u}</h6>
                               </Card.Text>
                             </Card.Body> 
@@ -674,6 +692,7 @@ function RideSeekForm() {
   const [from_u, setFrom] = useState('');
   const [to_u, setTo] = useState('');
   const [when_u, setWhen] = useState('');
+  const [contact_u, setContact] = useState('');
   const [extra_details_u, setExtraDetails] = useState('');
 
   const [isSent, setIsSent] = useState(false)
@@ -687,6 +706,7 @@ function RideSeekForm() {
           "from_u": from_u,
           "to_u": to_u,
           "when_u": when_u,
+          "contact_u": contact_u,
           "extra_details_u": extra_details_u
         }
       })
@@ -768,6 +788,18 @@ function RideSeekForm() {
           className="sizing" 
           value={when_u}
           onChange={e => setWhen(e.target.value)}
+        />
+
+        <br />
+        <br />
+
+        <Form.Label> </Form.Label>
+        <Input
+          type="text"
+          placeholder="Contact Information"
+          className="sizing"
+          value={contact_u}
+          onChange={e => setContact(e.target.value)}
         />
 
         <br />

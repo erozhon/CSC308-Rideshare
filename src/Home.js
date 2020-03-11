@@ -7,7 +7,6 @@ import Card from "react-bootstrap/Card";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import Form from "react-bootstrap/Form";
-import FormControl from "react-bootstrap/FormControl";
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Image from "react-bootstrap/Image";
@@ -495,15 +494,6 @@ function RideOfferPage() {
     const [when_u_gte, setWhenGTE] = useState('');
     const [cost_u, setCost] = useState('');
     const [link, setLink] = useState("http://localhost:8000/api/ride_offer/?format=json");
-    var options = {
-                    year: "numeric",
-                    month: "numeric",
-                    day: "numeric",
-                    hour: 'numeric', 
-                    minute: 'numeric', 
-                    second: 'numeric',
-                    timeZone: 'America/Los_Angeles'
-                  };
     useEffect(() => {
         const fetchData = async () => {
             const result = await axios.get(link);

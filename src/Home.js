@@ -177,7 +177,9 @@ export default function Home() {
     <UserProvider value={user}>
       <Navbar bg="light" expand="lg">
         <Navbar.Brand>
-          <p class="text-success">CALPOLYRIDES</p>
+          <Link to="/ride_offers">
+            <p class="text-success">CALPOLYRIDES</p>
+          </Link>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
@@ -186,7 +188,7 @@ export default function Home() {
             <Nav.Link href="#link">
               <li>
                 <Link to="/ride_offers">
-                  <p class="text-success">View Ride Offers</p>
+                  <p class="text-success">Ride Offers</p>
                 </Link>
               </li>
             </Nav.Link>
@@ -194,7 +196,7 @@ export default function Home() {
             <Nav.Link href="#form">
               <li>
                 <Link to="/ride_offer_form">
-                  <p class="text-success">Create Ride Offer</p>
+                  <p class="text-success">Create Offer</p>
                 </Link>
               </li>
             </Nav.Link> 
@@ -202,7 +204,7 @@ export default function Home() {
             <Nav.Link href="#link">
               <li>
                 <Link to="/ride_seeks">
-                  <p class="text-success">View Ride Requests</p>
+                  <p class="text-success">Ride Requests</p>
                 </Link>
               </li>
             </Nav.Link>   
@@ -210,7 +212,7 @@ export default function Home() {
             <Nav.Link href="#form">
               <li>
                 <Link to="/ride_seek_form">
-                  <p class="text-success">Create Ride Request</p>
+                  <p class="text-success">Create Request</p>
                 </Link>
               </li>
             </Nav.Link>           
@@ -303,7 +305,7 @@ function ProfilePage() {
               <br />
               <br />
               <h5>Contact Information</h5>
-              Phone Number : 888-888-8888 Email : Kslocum@calpoly.edu
+              Phone Number : 888-888-8888 Email : {user.email}
             </Card.Text>
           </Card.Body>
         </Card>
@@ -575,7 +577,7 @@ function RideOfferPage() {
                                 <h6>Contact: {offer.contact_u}</h6>
                                 <h6>{offer.will_drop_u ? "Willing to drop off along the way" : "Not willing to drop off along way"}</h6>
                                 <h6>Note from Driver: {offer.extra_details_u}</h6>
-                                <h6>Map Link: <a href='https://www.google.com/maps/dir/{offer.from_u}/{offer.to_u}' target="_blank"> Google Maps Link! </a></h6>
+                                <h6>Map Link: <a href={"https://www.google.com/maps/dir/"+offer.from_u+"/"+offer.to_u+""} target="_blank"> Google Maps Link! </a></h6>
                               </Card.Text>
                             </Card.Body> 
                         </Card>
@@ -660,9 +662,10 @@ function RideSeekPage() {
                             <Card.Body>
                               <Card.Text>
                                 <h6>Rider: {seek.name_u}</h6>
-                                <h6>When: Around {seek.when_u}</h6>
+                                <h6>When: {seek.when_u}</h6>
                                 <h6>Contact Information: {seek.contact_u}</h6>
                                 <h6>Note from Rider: {seek.extra_details_u}</h6>
+                                <h6>Map Link: <a href={"https://www.google.com/maps/dir/"+seek.from_u+"/"+seek.to_u+""} target="_blank"> Google Maps Link! </a></h6>
                               </Card.Text>
                             </Card.Body> 
                         </Card>
@@ -707,12 +710,12 @@ function RideSeekForm() {
 
   const successMessage = 
                           <div>
-                            <p>Ride offer post completed successfully!</p>                   
+                            <p>Ride request post completed successfully!</p>                   
                             <Link to="/ride_seeks">
-                              <p class="text-success">View ride offers</p>
+                              <p class="text-success">View ride requests</p>
                             </Link>
                             <Link to="/ride_seek_form" onClick={refreshPage}>
-                              <p class="text-success">Create another ride offer</p>
+                              <p class="text-success">Create another ride request</p>
                             </Link>                            
                           </div>
   // check for successful submit

@@ -1,4 +1,6 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+------------------------------------------------------------------------------------------------------------------------------
+## Project ReadMe
 
 ## Set Up
 
@@ -107,3 +109,13 @@ Pylint - https://www.pylint.org/
 
 ### Javascript Linter
 https://github.com/SamVerschueren/clinton
+
+------------------------------------------------------------------------------------------------------------------------------
+## Static	Source	Code	Analysis Report
+
+Link to the 
+https://docs.google.com/document/d/1S_HpZ6txOGm1_qBL_pQkP4KXT_CkWrDxsBk_0t9R_dg/edit?usp=sharing
+
+
+------------------------------------------------------------------------------------------------------------------------------
+## Static	Source	Code	Analysis Report

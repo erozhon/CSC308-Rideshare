@@ -2,9 +2,9 @@ import { defineFeature, loadFeature } from 'jest-cucumber';
 import React from 'react';
 import * as source from './src';
 
-const filterFeature = loadFeature('./Features/filtering.feature');
+const priceFeature = loadFeature('./Features/filtering.feature');
 
-defineFeature(filterFeature, test=> {
+defineFeature(priceFeature, test=> {
     test('Filtering by Cost', ({given, when, then }) => {
         let user;
     

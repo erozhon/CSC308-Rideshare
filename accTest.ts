@@ -2,21 +2,24 @@ import { defineFeature, loadFeature } from 'jest-cucumber';
 import React from 'react';
 import * as source from './src';
 
-const priceFeature = loadFeature('./Features/filtering.feature');
+const filterFeature = loadFeature('./Features/filtering.feature');
 
-defineFeature(priceFeature, test=> {
+defineFeature(filterFeature, test=> {
     test('Filtering by Cost', ({given, when, then }) => {
         let user;
     
-        given ('I want to view rides under a specific cost', () => {
+        given ('I am a Rider looking to travel to UCLA at a max cost', () => {
+            //needs to load ride offer page
             ridePage = source;
         });
 
         when ('I enter a max ride price', () => {
+            //needs to actually filter the page
             user.filter(maxRidePrice);
         });
 
-        then('the system wil show me all of the rides that are under that price', () => {
+        then('the system will show me the rides under that price', () => {
+            //needs to confirm the filtering works
             expect(user.viewRides).toBe(true);
         });
     });

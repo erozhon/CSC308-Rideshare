@@ -1,4 +1,4 @@
-describe ('Filter From Test', () => {
+describe ('Filter To Test', () => {
     it('Visit the app', () => {
         cy.visit('http://localhost:3000/ride_seeks');
     });

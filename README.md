@@ -131,6 +131,10 @@ Link: https://docs.google.com/document/d/1OalYucbZbxhU3WfkChXtxmLWmFjxTmXvw8jh3R
 ------------------------------------------------------------------------------------------------------------------------------
 #### UNIT/INTEGRATION TESTS
 
+Tests for the frontend can be found in src/__tests__
+
+Link: https://docs.google.com/document/d/1OC2FhULkOiitDDXVIfbrw4XjjsI9r7qd_BDPY6FP7ys/edit?usp=sharing
+
 ------------------------------------------------------------------------------------------------------------------------------
 #### ACCEPTANCE TESTS
 

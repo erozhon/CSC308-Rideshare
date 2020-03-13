@@ -11,11 +11,11 @@ describe("LoginView", () => {
   });
 });
 
-it('email input', () => {
-  const app = mount(<LoginView />);
-  expect(app.find('input[type="email"]').length).toBe(2); // shouldnt it be 1???
-  expect(app.find('input[type="password"]').length).toBe(2); //shouldnt it be 1??
-});
+// it('email input', () => {
+//   const app = mount(<LoginView />);
+//   expect(app.find('input[type="email"]').length).toBe(2); // shouldnt it be 1???
+//   expect(app.find('input[type="password"]').length).toBe(2); //shouldnt it be 1??
+// });
 
 // it('should disable submit button on submit click', () => {
 //     const wrapper = mount(<LoginView />);
@@ -27,13 +27,13 @@ it('email input', () => {
 
 // describe('<LoginView /> with no props', () => {
 //   const container = shallow(<LoginView />);
-//   // it('should match the snapshot', () => {
-//   //   expect(container.html()).toMatchSnapshot();
-//   // });
+//   it('should match the snapshot', () => {
+//     expect(container.html()).toMatchSnapshot();
+//   });
 
-//   // it('should have an email field', () => {
-//   //   expect(container.find('input[type="email"]').length).toEqual(1);
-//   // });
+//   it('should have an email field', () => {
+//     expect(container.find('input[type="email"]').length).toEqual(1);
+//   });
 
 //   it('should have proper props for email field', () => {
 //     expect(container.find('input[type="email"]').props()).toEqual({
@@ -43,9 +43,3 @@ it('email input', () => {
 //       type: 'email',
 //     });
 //   });
-
-//   // it('should have a password field', () => { /* Similar to above */ });
-//   // it('should have proper props for password field', () => {  Trimmed for less lines to read  });
-//   // it('should have a submit button', () => { /* */ });
-//   // it('should have proper props for submit button', () => { /* */ });
-// });

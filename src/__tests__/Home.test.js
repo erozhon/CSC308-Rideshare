@@ -6,7 +6,7 @@ import Adapter from 'enzyme-adapter-react-16';
 import ReactDOM from 'react-dom';
 configure({ adapter: new Adapter() });
 
-// describe("Home", () => {
+//describe("Home", () => {
 //   it("should render Home", () => {
 //     const wrapper = shallow(<Home />);
 //   });

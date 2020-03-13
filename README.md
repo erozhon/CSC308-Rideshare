@@ -123,16 +123,16 @@ https://docs.google.com/document/d/1S_HpZ6txOGm1_qBL_pQkP4KXT_CkWrDxsBk_0t9R_dg/
 ## SOFTWARE TESTS
 
 ------------------------------------------------------------------------------------------------------------------------------
-### TESTING STRATEGY DOCUMENT
+#### TESTING STRATEGY DOCUMENT
 
 Updated testing strategy with all the new information of what was actually used to test our developments.
 Link: https://docs.google.com/document/d/1OalYucbZbxhU3WfkChXtxmLWmFjxTmXvw8jh3Rh59h4/edit?usp=sharing
 
 ------------------------------------------------------------------------------------------------------------------------------
-### UNIT/INTEGRATION TESTS
+#### UNIT/INTEGRATION TESTS
 
 ------------------------------------------------------------------------------------------------------------------------------
-### ACCEPTANCE TESTS
+#### ACCEPTANCE TESTS
 
 Tests can be seen under the Cypress Folder in the git, to see our 8 different scenarios open the link below.
 

@@ -116,7 +116,7 @@ https://github.com/SamVerschueren/clinton
 ------------------------------------------------------------------------------------------------------------------------------
 ## Static	Source	Code	Analysis Report
 
-Link to the 
+Link: 
 https://docs.google.com/document/d/1S_HpZ6txOGm1_qBL_pQkP4KXT_CkWrDxsBk_0t9R_dg/edit?usp=sharing
 
 ------------------------------------------------------------------------------------------------------------------------------
@@ -132,7 +132,9 @@ https://docs.google.com/document/d/1OalYucbZbxhU3WfkChXtxmLWmFjxTmXvw8jh3Rh59h4/
 
 ------------------------------------------------------------------------------------------------------------------------------
 ### ACCEPTANCE TESTS
-
+Tests can be seen under the Cypress Folder in the git, to see our 8 different scenarios open the link below.
+Link:
+https://docs.google.com/document/d/1b82pMT_Cq64SD-6A0p6m5wWCyLSlNt3IKnfUD6slQt4/edit?usp=sharing
 ------------------------------------------------------------------------------------------------------------------------------
 ## CONTINOUS INTEGRATION
 

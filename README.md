@@ -144,5 +144,5 @@ Link: https://docs.google.com/document/d/1b82pMT_Cq64SD-6A0p6m5wWCyLSlNt3IKnfUD6
 
 ------------------------------------------------------------------------------------------------------------------------------
 ## CONTINOUS INTEGRATION
-
+Travis CI server - https://travis-ci.com/github/erozhon/CSC308-Rideshare
 

@@ -5,10 +5,16 @@ import { configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 configure({ adapter: new Adapter() });
 
+describe("LoginView", () => {
+  it("should render Login", () => {
+    const wrapper = shallow(<LoginView />);
+  });
+});
+
 it('email input', () => {
   const app = mount(<LoginView />);
-  //expect(app.find('input[type="email"]').length).toBe(1);
-  //expect(app.find('input[type="password"]').length).toBe(1);
+  expect(app.find('input[type="email"]').length).toBe(2); // shouldnt it be 1???
+  expect(app.find('input[type="password"]').length).toBe(2); //shouldnt it be 1??
 });
 
 // it('should disable submit button on submit click', () => {

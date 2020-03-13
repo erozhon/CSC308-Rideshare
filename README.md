@@ -125,7 +125,8 @@ https://docs.google.com/document/d/1S_HpZ6txOGm1_qBL_pQkP4KXT_CkWrDxsBk_0t9R_dg/
 ------------------------------------------------------------------------------------------------------------------------------
 ### TESTING STRATEGY DOCUMENT
 
-https://docs.google.com/document/d/1OalYucbZbxhU3WfkChXtxmLWmFjxTmXvw8jh3Rh59h4/edit?usp=sharing
+Updated testing strategy with all the new information of what was actually used to test our developments.
+Link: https://docs.google.com/document/d/1OalYucbZbxhU3WfkChXtxmLWmFjxTmXvw8jh3Rh59h4/edit?usp=sharing
 
 ------------------------------------------------------------------------------------------------------------------------------
 ### UNIT/INTEGRATION TESTS
@@ -135,9 +136,7 @@ https://docs.google.com/document/d/1OalYucbZbxhU3WfkChXtxmLWmFjxTmXvw8jh3Rh59h4/
 
 Tests can be seen under the Cypress Folder in the git, to see our 8 different scenarios open the link below.
 
-Link:
-
-https://docs.google.com/document/d/1b82pMT_Cq64SD-6A0p6m5wWCyLSlNt3IKnfUD6slQt4/edit?usp=sharing
+Link: https://docs.google.com/document/d/1b82pMT_Cq64SD-6A0p6m5wWCyLSlNt3IKnfUD6slQt4/edit?usp=sharing
 
 ------------------------------------------------------------------------------------------------------------------------------
 ## CONTINOUS INTEGRATION

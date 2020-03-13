@@ -1,6 +1,9 @@
+## 309 FINAL PROJECT DELIVERY
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 ------------------------------------------------------------------------------------------------------------------------------
-## Project ReadMe
+## Project README
 
 ## Set Up
 
@@ -116,6 +119,21 @@ https://github.com/SamVerschueren/clinton
 Link to the 
 https://docs.google.com/document/d/1S_HpZ6txOGm1_qBL_pQkP4KXT_CkWrDxsBk_0t9R_dg/edit?usp=sharing
 
+------------------------------------------------------------------------------------------------------------------------------
+## SOFTWARE TESTS
 
 ------------------------------------------------------------------------------------------------------------------------------
-## Static	Source	Code	Analysis Report
+### TESTING STRATEGY DOCUMENT
+
+https://docs.google.com/document/d/1OalYucbZbxhU3WfkChXtxmLWmFjxTmXvw8jh3Rh59h4/edit?usp=sharing
+
+------------------------------------------------------------------------------------------------------------------------------
+### UNIT/INTEGRATION TESTS
+
+------------------------------------------------------------------------------------------------------------------------------
+### ACCEPTANCE TESTS
+
+------------------------------------------------------------------------------------------------------------------------------
+## CONTINOUS INTEGRATION
+
+

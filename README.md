@@ -132,8 +132,11 @@ https://docs.google.com/document/d/1OalYucbZbxhU3WfkChXtxmLWmFjxTmXvw8jh3Rh59h4/
 
 ------------------------------------------------------------------------------------------------------------------------------
 ### ACCEPTANCE TESTS
+
 Tests can be seen under the Cypress Folder in the git, to see our 8 different scenarios open the link below.
+
 Link:
+
 https://docs.google.com/document/d/1b82pMT_Cq64SD-6A0p6m5wWCyLSlNt3IKnfUD6slQt4/edit?usp=sharing
 ------------------------------------------------------------------------------------------------------------------------------
 ## CONTINOUS INTEGRATION
